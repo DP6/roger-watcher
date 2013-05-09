@@ -15,4 +15,5 @@ $ grunt
 * Search field
 * Validation of tracks
 * Interface enhancements
+* Query String parameters grouped by type
 * Suggestions: https://github.com/digitalinc/roger-watcher/issues

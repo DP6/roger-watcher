@@ -1,47 +1,37 @@
 {
-  "name": "PUDIM",
-  "description": "Validador de Universal Analytics",
-  "version": "0.3.0",
+  "name": "Roger Watcher",
+  "description": "Universal Analytics Validator",
+  "version": "0.0.1",
   "author": "dp6",
-  "homepage": "http://dp6.com.br/",
+  "homepage": "http://www.digitalcube.com.br/",
   "repository": {
     "type": "git",
-    "url": "git://github.com/gruntjs/grunt.git"
+    "url": "https://github.com/digitalinc/roger-watcher.git"
   },
   "bugs": {
-    "url": "http://github.com/gruntjs/grunt/issues"
+    "url": "https://github.com/digitalinc/roger-watcher/issues"
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+      "type": "GNU",
+      "url": "https://github.com/digitalinc/roger-watcher/blob/master/LICENSE.md"
     }
   ],
-  "main": "lib/grunt",
-  "scripts": {
-    "test": "grunt test"
-  },
+  "main": "src",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.5"
   },
   "keywords": [
-    "task",
-    "async",
-    "cli",
-    "minify",
-    "uglify",
-    "build",
-    "lodash",
-    "unit",
-    "test",
-    "qunit",
-    "nodeunit",
-    "server",
-    "init",
-    "scaffold",
-    "make",
-    "jake",
-    "tool"
+    "web analytics",
+    "digital analytics",
+    "universal analytics",
+    "validator",
+    "extension",
+    "chrome extension",
+    "plugin",
+    "google analytics",
+    "sniffer",
+    "debugger"
   ],
   "devDependencies": {
     "grunt": "~0.4.1",
