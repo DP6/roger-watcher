@@ -1,0 +1,13 @@
+// chrome.devtools.panels.create("Pudim Validator", "pudim32.png", "devtools/panel.html", function(panel) { });
+chrome.devtools.panels.create("Roger Watcher", "../img/logo32.png", "../panel.html", function(panel) {
+	var button = panel.createStatusBarButton("../img/ico-remove.png", "Limpar disparos", false);
+
+	panel.onShown.addListener(function tmp(panelWindow){
+		panel.onShown.removeListener(tmp);
+		_window = panelWindow;
+
+		button.onClicked.addListener(function btnClear(){
+			_window.PUDIM.clear();
+		});
+	})
+});

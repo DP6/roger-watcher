@@ -1,0 +1,192 @@
+body{
+	font-family: Ubuntu, Helvetica, Arial, Verdana, sans-serif;
+	font-size: 15px;
+	background-color: #eee;
+}
+#filter{
+	width: 100%;
+	overflow: hidden;
+	background-color: #fff;
+	position: fixed;
+	z-index: 10;
+}
+#panel{
+	padding-top: 47px;
+}
+#stripes{
+	margin: 0;
+	width: 100%;
+	height: 2px;
+	/* background: -webkit-linear-gradient(left, #fcc441 0%,#1a71a9 19%,#1a71a9 43%,#1e9449 59%,#1e9449 100%); */
+	background-image: linear-gradient(to right, #fcc441 0%,#1a71a9 19%,#1a71a9 43%,#1e9449 59%,#1e9449 100%);
+}
+	#logo{
+		margin: 2px 1.5em;
+		display: inline-block;
+		float: left;
+	}
+	#txtfilter{
+		margin: 3px 0 0 0;
+		padding: 0;
+		text-indent: 1em;
+		border:2px solid #eee;
+		display: inline-block;
+		height: 25px;
+		float: left;
+		width: 30%;
+		font-style:italic;
+		color:#bbb;
+		background-image: url('ico-search.png');
+		background-position: right top;
+		background-repeat: no-repeat;
+	}
+.track{
+	margin: 5px auto;
+	padding: 0 0 0.5em 0;
+	width: 99%;
+	background-color: #f5f5f5;
+	border:1px solid #ccc;
+	border-radius: 3px;
+	box-shadow: 1px 1px 3px #888888;
+	overflow: auto;
+}
+	.label{
+		width: 94%;
+		margin: 0 auto 1px;
+		overflow: auto;
+	}
+	.info{
+		margin: 0 8px 0 0;
+		width: 98%;
+		float: right;
+		background-position: left 3px;
+		background-repeat: no-repeat;
+		background-size: 22px;
+		overflow: auto;
+	}
+	.label{
+		height: 3px;
+		border-radius: 0 0 5px 5px;
+		background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
+		/* background: -webkit-linear-gradient(left, #1b9ed5 0%,#0366a3 99%); */
+		background-color: #1b9ed5;
+	}
+	.label.ok{
+		/* background: -webkit-linear-gradient(left, #87c23f 0%,#179844 99%); */
+		background-color: #87c23f;
+	}
+	.label.warn{
+		/* background: -webkit-linear-gradient(left, #fbab3d 0%,#f58222 99%); */
+		background-color: #fbab3d;
+	}
+	.label.error, .track[data-type="exception"] .label{
+		/* background: -webkit-linear-gradient(left, #ff5a5a 0%,#bd1b1b 99%) !important; */
+		background-color: #ff5a5a;
+	}
+	.type{
+		float: left;
+		margin-right: 10px;
+		width: 22px;
+		margin-top: 2px;
+	}
+	.content{
+		margin: 3px 0 0 32px;
+		display: block;
+		cursor: pointer;
+	}
+.controls{
+	margin: 5px 0 0 0;
+	float: right;
+}
+.filter{
+	margin-top:10px;
+	float: left;
+	height: 25px;
+}
+	.controls li{
+		display: inline;
+	}
+	.filter li{
+		display: inline-block;
+		border-radius: 10px;
+	}
+	.filter li.checked,#limpar-filtros{
+		background-color:#ddd;
+	}
+		.controls a{
+			min-width: 18px;
+			min-height: 18px;
+			float: left;
+			background-size: 18px 18px;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+		}
+		.filter a{
+			min-width: 22px;
+			min-height: 22px;
+			background-size: 22px 22px;
+			background-position: top left;
+			color:#323232;
+			text-decoration: none;
+		}
+		.filter span{
+			display: none;
+			padding: 0 0.5em 0 22px;
+		}
+		.filter .checked span,#limpar-filtros span{display: block;}
+		a.delete{
+			background-image: url('../img/ico-del.png');
+		}
+		a.detail{
+			background-image: url('../img/ico-list.png');
+		}
+		a.pageview,[data-type="pageview"] .info{
+			background-image: url('../img/ico-pageview.png');
+		}
+		a.event,[data-type="event"] .info{
+			background-image: url('../img/ico-event.png');
+		}
+		a.social, [data-type="social"] .info{
+			background-image: url('../img/ico-social.png');
+		}
+		a.transaction,[data-type="transaction"] .info{
+			background-image: url('../img/ico-transaction.png');
+		}
+		a.item,[data-type="item"] .info{
+			background-image: url('../img/ico-item.png');
+		}
+		a.timing,[data-type="timing"] .info{
+			background-image: url('../img/ico-timing.png');
+		}
+		a.appview,[data-type="appview"] .info{
+			background-image: url('../img/ico-appview.png');
+		}
+		a.exception,[data-type="exception"] .info{
+			background-image: url('../img/ico-exception.png');
+		}
+
+	.qsWrapper {
+		display: none;
+		overflow: auto;
+		max-width: 100%;
+		margin-top: 5px;
+		border-top: 1px solid #ccc;
+	}
+	.queryString .key{
+		font-weight: bold;
+	}
+
+/* classes para filtro */
+#panel.filtrado .track{display: none !important;}
+
+#panel.filtrado.pageview .track[data-type="pageview"],
+#panel.filtrado.event .track[data-type="event"],
+#panel.filtrado.social .track[data-type="social"],
+#panel.filtrado.transaction .track[data-type="transaction"],
+#panel.filtrado.item .track[data-type="item"],
+#panel.filtrado.timing .track[data-type="timing"],
+#panel.filtrado.appview .track[data-type="appview"],
+#panel.filtrado.exception .track[data-type="exception"]{
+	display: block !important;
+}
+
