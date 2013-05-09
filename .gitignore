@@ -8,4 +8,5 @@ Icon?
 _site
 plugin-fabinho/
 node_modules/
+dist/
 *.sublime*
