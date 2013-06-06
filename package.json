@@ -1,7 +1,7 @@
 {
   "name": "Roger Watcher",
-  "description": "Universal Analytics Validator",
-  "version": "0.0.1",
+  "description": "A validator for Universal Analytics implementations",
+  "version": "0.5.0",
   "author": "dp6",
   "homepage": "http://www.digitalcube.com.br/",
   "repository": {

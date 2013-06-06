@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 	<meta charset="UTF-8">
-	<title>Pudim Validator</title>
+	<title>Roger Watcher - by dp6</title>
 	
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&amp;subset=Latin">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css"/>
@@ -10,9 +10,8 @@
 </head>
 <body>
 	<header id="filter">
-		<hr id="stripes"/>
 		<a href="http://www.digitalcube.com.br/?utm_source=plugin"
-		title="pudim validator - dp6 TECH" id="logo" target="blank">
+		title="Roger Watcher - dp6 TECH" id="logo" target="blank">
 			<img src="img/logodp6.png" alt="dp6.com.br">
 		</a>
 		<ul class="controls filter">
@@ -24,19 +23,18 @@
 			<li><a href="#" title="item" 			class="item"		><span>Itens</span></a></li>
 			<li><a href="#" title="transaction" 	class="transaction"	><span>Transactions</span></a></li>
 			<li><a href="#" title="exception"		class="exception"	><span>Exceptions</span></a></li>
-			<li id="limpar-filtros">
-				<a href="#" class="clean"	><span>Clear Filters</span></a>
-			</li>
+ 			<!--li id="">
+				<a href="#" class="clean-gray">Clear Filters</a>
+			</li-->
 		</ul>
+		<button class="clear clean-gray">Clear Filters</button>
+		<input id="busca" type="text" placeholder="search"></input>
+		<hr id="stripes"/>
 	</header>
 	<section id="panel" class="">
 		<div class="track" data-type="pageview" data-qs="">
 			<hr class="label error"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -65,10 +63,6 @@
 		<div class="track" data-type="event" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail"title="detalhe"></a></li>
-					<li><a href="#" class="delete"title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -97,10 +91,6 @@
 		<div class="track" data-type="social" data-qs="">
 			<hr class="label warn"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail"title="detalhe"></a></li>
-					<li><a href="#" class="delete"title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -129,10 +119,6 @@
 		<div class="track" data-type="item" data-qs="">
 			<hr class="label"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail"title="detalhe"></a></li>
-					<li><a href="#" class="delete"title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -161,10 +147,6 @@
 		<div class="track" data-type="pageview" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -193,10 +175,6 @@
 		<div class="track" data-type="transaction" data-qs="">
 			<hr class="label"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail"title="detalhe"></a></li>
-					<li><a href="#" class="delete"title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -225,10 +203,6 @@
 		<div class="track" data-type="pageview" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -257,10 +231,6 @@
 		<div class="track" data-type="timing" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -289,10 +259,6 @@
 		<div class="track" data-type="appview" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -321,10 +287,6 @@
 		<div class="track" data-type="pageview" data-qs="">
 			<hr class="label error"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -353,10 +315,6 @@
 		<div class="track" data-type="exception" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -385,10 +343,6 @@
 		<div class="track" data-type="pageview" data-qs="">
 			<hr class="label ok"/>
 			<section class="info">
-				<ul class="controls">
-					<li><a href="#" class="detail" title="detalhe"></a></li>
-					<li><a href="#" class="delete" title="delete"></a></li>
-				</ul>
 				<p class="content">
 					/path/do/pageview
 				</p>
@@ -417,7 +371,6 @@
 	</section>
 	<script src="js/jquery.js"></script>
 	<script src="js/eventos.js"></script>
-	<script src="js/analytics.js"></script>
 	<script src="js/tagueamento.js"></script>
 </body>
 </html>

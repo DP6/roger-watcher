@@ -12,7 +12,6 @@ $ npm install
 $ grunt
 ```
 ### Coming Soon
-* Search field
 * Validation of tracks
 * Interface enhancements
 * Query String parameters grouped by type

@@ -136,7 +136,6 @@ var PUDIM = window.PUDIM = (function(){
 				}
 
 				this.appendNewHit(params, qs, status, decodeURIComponent(label), metadata.universal_analytics);
-
 				publish('newhit', url);
 
 				// if (panel.hasClass('filtrado') && !panel.hasClass(params.t)) {

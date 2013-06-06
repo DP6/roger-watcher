@@ -1,7 +1,6 @@
-var panel = jQuery("#panel");
+var PUDIM = PUDIM || {panel: jQuery('#panel'), info: {name: "Dev", version: "X.X.X"}, util: {sub: function(){}}};
 
-panel.on('click','.delete',function(e){
-	e.stopPropagation();
+PUDIM.panel.on('click','.delete',function(e){
 	e.preventDefault();
 	var track = jQuery(this).closest('.track');
 	track.slideUp('300',function(){
@@ -9,22 +8,31 @@ panel.on('click','.delete',function(e){
 	});
 });
 
-panel.on('click','.detail,.content',function(e){
+PUDIM.panel.on('click','.track',function(){
+	jQuery(this).find('.qsWrapper').slideToggle('slow');
+});
+
+PUDIM.panel.on('click','.qsWrapper', function(e){
 	e.stopPropagation();
-	e.preventDefault();
-	var track = jQuery(this).closest('.track');
-	track.find('.qsWrapper').slideToggle('slow');
 });
 
 jQuery('.filter').on('click', 'a', function(e){
-	e.stopPropagation();
 	e.preventDefault();
-
-	if (jQuery(this).hasClass('clean')) {
-		jQuery('.checked').removeClass('checked');
-		panel.removeClass();
-	} else {
-		jQuery(this).closest('li').toggleClass('checked');
-		panel.toggleClass(this.className).toggleClass('filtrado', jQuery('.checked').length > 0);
-	}
+	jQuery(this).closest('li').toggleClass('checked');
+	PUDIM.panel.toggleClass(this.className).toggleClass('filtrado', jQuery('.checked').length > 0);
 });
+
+jQuery('.clear').on('click',function(e){
+	e.preventDefault();
+	jQuery('.checked').removeClass('checked');
+	PUDIM.panel.removeClass();
+});
+
+jQuery('#busca').bind('keyup', function() {
+	var s = new RegExp(this.value,'i');
+	jQuery('.track table').each(function() {
+		jQuery(this).closest('.track').toggle(s.test(jQuery(this).text()));
+	});
+});
+
+PUDIM.util.sub('newhit', function(){ jQuery("#busca").trigger('keyup'); });

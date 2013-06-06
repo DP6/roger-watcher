@@ -92,7 +92,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/js/all_concat.js' : ['src/js/script.js','src/js/eventos.js','src/js/tagueamento.js'],
+          'dist/js/all.js' : ['src/js/script.js','src/js/eventos.js','src/js/tagueamento.js'],
           'dist/js/background.js': 'src/js/background.js',
           'dist/js/devtools.js': 'src/js/devtools.js'
         }
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
       },
       compile: {
         files: {
-          'dist/js/all.js' : 'dist/js/all_concat.js'
+          'dist/js/all.js' : 'dist/js/all.js'
         }
       }
     },
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
           {
             cwd: 'src/',
             expand: true,
-            src: ['manifest.json', 'img/*', 'js/analytics.js', 'js/jquery.js'],
+            src: ['manifest.json', 'img/*', 'js/jquery.js'],
             dest: 'dist/'
           }
         ]
