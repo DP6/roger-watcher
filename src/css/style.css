@@ -7,7 +7,9 @@ body{
 	width: 100%;
 	overflow: hidden;
 	background-color: #fff;
+	height: 45px;
 	position: fixed;
+	white-space: nowrap;
 	z-index: 10;
 }
 #panel{
@@ -21,7 +23,7 @@ body{
 	background-image: linear-gradient(to right, #fcc441 0%,#1a71a9 19%,#1a71a9 43%,#1e9449 59%,#1e9449 100%);
 }
 	#logo{
-		margin: 2px 1.5em;
+		margin: 2px 10px;
 		display: inline-block;
 		float: left;
 	}
@@ -42,32 +44,27 @@ body{
 	}
 .track{
 	margin: 5px auto;
-	padding: 0 0 3px 0;
 	width: 99%;
 	background-color: #f5f5f5;
 	border:1px solid: #dfdfdf;
 	border-radius: 3px;
 	box-shadow: 1px 1px 3px #888888;
-	overflow: auto;
+	overflow: hidden;
 	cursor: pointer;
+	transition: all 0.25s;
 }
-	.label{
-		width: 94%;
-		margin: 0 auto 1px;
-		overflow: auto;
-	}
 	.info{
-		margin: 0 8px 0 0;
+		margin: 4px 8px 2px;
 		width: 98%;
-		float: right;
-		background-position: left 3px;
+		background-position: top -1px;
 		background-repeat: no-repeat;
 		background-size: 18px;
-		overflow: auto;
 	}
 	.label{
+		width: 94%;
+		margin: 0 auto -3px;
 		height: 3px;
-		border-radius: 0 0 5px 5px;
+		border-radius: 0 10px;
 		background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
 		/* background: -webkit-linear-gradient(left, #1b9ed5 0%,#0366a3 99%); */
 		background-color: #1b9ed5;
@@ -80,7 +77,7 @@ body{
 		/* background: -webkit-linear-gradient(left, #fbab3d 0%,#f58222 99%); */
 		background-color: #fbab3d;
 	}
-	.label.error, .track[data-type="exception"] .label{
+	.label.error, .track.exception .label{
 		/* background: -webkit-linear-gradient(left, #ff5a5a 0%,#bd1b1b 99%) !important; */
 		background-color: #ff5a5a;
 	}
@@ -91,24 +88,27 @@ body{
 		margin-top: 2px;
 	}
 	.content{
-		margin: 3px 0 0 32px;
-		display: block;
-		cursor: pointer;
+		margin: 0 36px 0 24px;
+		white-space: nowrap;
+		overflow: hidden;
+		line-height: 18px;
+		height: 18px;
 	}
 .controls{
 	float: right;
 }
+	.controls li{
+		display: inline;
+	}
 .filter{
 	margin-top:10px;
 	float: left;
 	height: 25px;
 }
-	.controls li{
-		display: inline;
-	}
 	.filter li{
 		display: inline-block;
 		border-radius: 10px;
+		margin: 0 2.5px;
 	}
 	.filter li.checked,#limpar-filtros{
 		background-color:#ddd;
@@ -122,8 +122,8 @@ body{
 			background-repeat: no-repeat;
 		}
 		.filter a{
-			min-width: 22px;
-			min-height: 22px;
+			width: 22px;
+			height: 22px;
 			background-size: 22px 22px;
 			background-position: top left;
 			color:#323232;
@@ -134,35 +134,35 @@ body{
 			display: none;
 			padding: 0 0.5em 0 22px;
 		}
-		.filter .checked span,#limpar-filtros span{display: block;}
+		/*.filter .checked span,#limpar-filtros span{display: block;}*/
 		a.delete{
 			background-image: url('../img/ico-del.png');
 		}
 		a.detail{
 			background-image: url('../img/ico-list.png');
 		}
-		a.pageview,[data-type="pageview"] .info{
+		a.pageview, .track.pageview .info{
 			background-image: url('../img/ico-pageview.png');
 		}
-		a.event,[data-type="event"] .info{
+		a.event, .track.event .info{
 			background-image: url('../img/ico-event.png');
 		}
-		a.social, [data-type="social"] .info{
+		a.social, .track.social .info{
 			background-image: url('../img/ico-social.png');
 		}
-		a.transaction,[data-type="transaction"] .info{
+		a.transaction, .track.transaction .info{
 			background-image: url('../img/ico-transaction.png');
 		}
-		a.item,[data-type="item"] .info{
+		a.item, .track.item .info{
 			background-image: url('../img/ico-item.png');
 		}
-		a.timing,[data-type="timing"] .info{
+		a.timing, .track.timing .info{
 			background-image: url('../img/ico-timing.png');
 		}
-		a.appview,[data-type="appview"] .info{
+		a.appview, .track.appview .info{
 			background-image: url('../img/ico-appview.png');
 		}
-		a.exception,[data-type="exception"] .info{
+		a.exception, .track.exception .info{
 			background-image: url('../img/ico-exception.png');
 		}
 
@@ -217,16 +217,21 @@ table{
 			padding:0.2em;
 		}
 /* classes para filtro */
-#panel.filtrado .track{display: none !important;}
+.filtrado .track {
+	display: none;
+}
 
-#panel.filtrado.pageview .track[data-type="pageview"],
-#panel.filtrado.event .track[data-type="event"],
-#panel.filtrado.social .track[data-type="social"],
-#panel.filtrado.transaction .track[data-type="transaction"],
-#panel.filtrado.item .track[data-type="item"],
-#panel.filtrado.timing .track[data-type="timing"],
-#panel.filtrado.appview .track[data-type="appview"],
-#panel.filtrado.exception .track[data-type="exception"]{
+.pageview .track.pageview:not(.hidden),
+.event .track.event:not(.hidden),
+.social .track.social:not(.hidden),
+.transaction .track.transaction:not(.hidden),
+.item .track.item:not(.hidden),
+.timing .track.timing:not(.hidden),
+.appview .track.appview:not(.hidden),
+.exception .track.exception:not(.hidden){
 	display: block !important;
 }
 
+.track.hidden {
+	display: none!important;
+}

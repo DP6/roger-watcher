@@ -35,6 +35,15 @@ var PUDIM = window.PUDIM = (function(){
 		return obj;
 	}
 
+	function objectToQuery(obj) {
+		var key, url = [];
+		for (key in obj) {
+			if (!obj.hasOwnProperty(key) || typeof opj[key] === object) return;
+			url.push(key + '=' + obj[key]);
+		}
+		return url.join('&');
+	}
+
 	function init(details) {
 		var url = details.request.url;
 		if (commonRules.universal_analytics(url)) {
@@ -73,12 +82,12 @@ var PUDIM = window.PUDIM = (function(){
 			},
 			appendNewHit: function appendNewHit(params, qs, status, content, metadata){
 				var clone = this.template.clone();
-				clone.attr('data-type', params.t).attr('data-qs', qs);
+				clone.addClass(params.t).attr('data-qs', qs);
 				// clone.addClass(params.t).data('qs', qs);
 				clone.find('.label').addClass(status);
-				clone.find('.content').text(content);
+				clone.find('.content').text(content).attr('title', content);
 				clone.find('table.queryString').html((function(){
-					var html, param;
+					var html = '', param;
 					for (param in params) {
 						if (param.charAt(0) === '_' || !params.hasOwnProperty(param)) continue;
 						html += '<tr>';
@@ -173,10 +182,10 @@ var PUDIM = window.PUDIM = (function(){
 	};
 
 	requiredParameters = {
-		all: ['t'],
+		all: ['v', 't', 'cid', 'tid'],
 		social: ['sn', 'sa', 'st'],
 		transaction: ['ti'],
-		item: ['ti']
+		item: ['ti', 'in']
 	};
 
 	// MetaData

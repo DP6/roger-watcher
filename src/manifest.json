@@ -1,7 +1,7 @@
 {
   "name": "Roger Watcher",
-  "description": "Validador de Universal Analytics",
-  "version": "0.5.0",
+  "description": "A validator for Universal Analytics implementations",
+  "version": "0.6.0",
   "icons": {
     "32": "img/logo32.png",
     "48": "img/logo48.png",

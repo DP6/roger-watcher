@@ -3,7 +3,7 @@ function Tracker(id) {
 	tracker.id = id;
 	tracker.cid = false;
 	tracker.queue = [];
-	tracker.domain = encodeURIComponent(document.location.hostname);
+	tracker.hostname = encodeURIComponent(document.location.hostname);
 	tracker.title = encodeURIComponent(document.title);
 
 	chrome.storage.sync.get('dp6_cid', function(items){
@@ -24,12 +24,17 @@ function Tracker(id) {
 }
 
 Tracker.prototype.sendhit = function(hit) {
-	if (!this.cid) {
-		return this.queue.push(arguments);
-	}
-	hit = 'v=1&tid=' + this.id + '&cid=' + this.cid + '&' + hit;
-	var img = document.createElement('img');
-	img.src = 'https://www.google-analytics.com/collect?' + hit;
+	if (!this.cid) return this.queue.push(arguments);
+
+	var basehit = ['v=1']; // Tag version
+	basehit.push('tid=' + this.id); // Account ID
+	basehit.push('cid=' + this.cid); // User ID (Unique, randomly generated)
+	basehit.push('sr=' + screen.width +'x' + screen.height); // Screen resolution
+	basehit.push('vp=' + window.innerWidth +'x' + window.innerHeight); // Viewport size
+	basehit.push('sd=' + screen.colorDepth + '-bits'); // Color depth
+	basehit.push(hit);
+
+	document.createElement('img').src = 'https://www.google-analytics.com/collect?' + basehit.join('&') + '&z=' + (new Date()|0);
 	// var xhr = new XMLHttpRequest();
 	// xhr.open('POST', 'https://www.google-analytics.com/collect', true);
 	// xhr.send(hit);
@@ -41,7 +46,7 @@ Tracker.prototype.set = function(param, value){
 
 Tracker.prototype.pageview = function(page) {
 	page = encodeURIComponent(page);
-	this.sendhit('t=pageview&dh=' + this.domain + '&dp=' + page + '&dt=' + this.title);
+	this.sendhit('t=pageview&dh=' + this.hostname + '&dp=' + page + '&dt=' + this.title);
 };
 
 Tracker.prototype.event = function(category, action, label, value) {
@@ -73,13 +78,13 @@ jQuery('.filter').find('a').mousedown(function(){
 });
 
 PUDIM.panel.on('click','.detail,.content',function(){
-	var track = jQuery(this).closest('.track');
-	ga.event('visualização de detalhes', track.data().type);
+	var track = jQuery(this).closest('.track')[0];
+	ga.event('visualização de detalhes', track.className.split(' ')[1]);
 });
 
 PUDIM.panel.on('click','.delete',function(){
-	var track = jQuery(this).closest('.track');
-	ga.event('exclusão de disparo', track.data().type);
+	var track = jQuery(this).closest('.track')[0];
+	ga.event('exclusão de disparo', track.className.split(' ')[1]);
 });
 
 window.onbeforeunload = window.onunload = function(){
