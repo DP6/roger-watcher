@@ -9,35 +9,30 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 </head>
 <body>
-	<header id="filter">
+	<header>
 		<a href="http://www.digitalcube.com.br/?utm_source=plugin"
 		title="Roger Watcher - dp6 TECH" id="logo" target="blank">
 			<img src="img/logodp6.png" alt="dp6.com.br">
 		</a>
-		<ul class="controls filter">
-			<li><a href="#" title="pageview"		class="pageview" 	><span>Pageviews</span></a></li>
-			<li><a href="#" title="appview"	 		class="appview"		><span>Appviews</span></a></li>
-			<li><a href="#" title="event"			class="event"	 	><span>Events</span></a></li>
-			<li><a href="#" title="timing" 	 		class="timing"		><span>Timing</span></a></li>
-			<li><a href="#" title="social"			class="social"	 	><span>Social</span></a></li>
-			<li><a href="#" title="item" 			class="item"		><span>Itens</span></a></li>
-			<li><a href="#" title="transaction" 	class="transaction"	><span>Transactions</span></a></li>
-			<li><a href="#" title="exception"		class="exception"	><span>Exceptions</span></a></li>
- 			<!--li id="">
-				<a href="#" class="clean-gray">Clear Filters</a>
-			</li-->
+		<ul class="filter">
+			<li><a href="#" title="PageView" class="pageview"></a></li>
+			<li><a href="#" title="AppView" class="appview"></a></li>
+			<li><a href="#" title="Event" class="event"></a></li>
+			<li><a href="#" title="Timing" class="timing"></a></li>
+			<li><a href="#" title="Social" class="social"></a></li>
+			<li><a href="#" title="Item" class="item"></a></li>
+			<li><a href="#" title="Transaction" class="transaction"></a></li>
+			<li><a href="#" title="Exception" class="exception"></a></li>
 		</ul>
-		<button class="clear clean-gray">Clear Filters</button>
-		<input id="busca" type="text" placeholder="search"></input>
+		<button class="clear">Clear Filters</button>
+		<input id="busca" type="text" placeholder=" Search here..."/>
 		<hr id="stripes"/>
 	</header>
-	<section id="panel" class="">
-		<div class="track" data-type="pageview" data-qs="">
+	<section id="panel">
+		<div class="track pageview">
 			<hr class="label error"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -59,13 +54,12 @@
 					</table>
 				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="event" data-qs="">
+		<div class="track event">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -86,14 +80,13 @@
 						</tr>
 					</table>
 				</div>
+				<a href="#" class="delete" title="Remove"></a>
 			</section>
 		</div>
-		<div class="track" data-type="social" data-qs="">
+		<div class="track social">
 			<hr class="label warn"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -115,8 +108,63 @@
 					</table>
 				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="item" data-qs="">
+		<div class="track item">
+			<hr class="label"/>
+			<section class="info">
+				<p class="content">/path/do/pageview</p>
+				<div class="qsWrapper">
+					<table class="queryString">
+						<tr>
+							<td class="key"></td>
+							<td class="value"></td>
+						</tr>
+						<tr>
+							<td class="key"></td>
+							<td class="value"></td>
+						</tr>
+						<tr>
+							<td class="key"></td>
+							<td class="value"></td>
+						</tr>
+						<tr>
+							<td class="key"></td>
+							<td class="value"></td>
+						</tr>
+					</table>
+				</div>
+			</section>
+			<a href="#" class="delete" title="Remove"></a>
+		</div>
+		<div class="track pageview">
+			<hr class="label ok"/>
+			<section class="info">
+				<p class="content">/path/do/pageview</p>
+				<div class="qsWrapper">
+					<table class="queryString">
+						<tr>
+							<td class="key">utmdt</td>
+							<td class="value">Direct Performance agora é dp6</td>
+						</tr>
+						<tr>
+							<td class="key">utmp</td>
+							<td class="value">/</td>
+						</tr>
+						<tr>
+							<td class="key">utmac</td>
+							<td class="value">UA-3635138-1</td>
+						</tr>
+						<tr>
+							<td class="key">utmcc</td>
+							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
+						</tr>
+					</table>
+				</div>
+			</section>
+			<a href="#" class="delete" title="Remove"></a>
+		</div>
+		<div class="track transaction">
 			<hr class="label"/>
 			<section class="info">
 				<p class="content">
@@ -143,13 +191,12 @@
 					</table>
 				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="pageview" data-qs="">
+		<div class="track pageview">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -167,45 +214,16 @@
 						<tr>
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
-						</tr>
-					</div>
-				</table>
-			</section>
-		</div>
-		<div class="track" data-type="transaction" data-qs="">
-			<hr class="label"/>
-			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
-				<div class="qsWrapper">
-					<table class="queryString">
-						<tr>
-							<td class="key"></td>
-							<td class="value"></td>
-						</tr>
-						<tr>
-							<td class="key"></td>
-							<td class="value"></td>
-						</tr>
-						<tr>
-							<td class="key"></td>
-							<td class="value"></td>
-						</tr>
-						<tr>
-							<td class="key"></td>
-							<td class="value"></td>
 						</tr>
 					</table>
 				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="pageview" data-qs="">
+		<div class="track timing">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -224,16 +242,15 @@
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
 						</tr>
-					</div>
-				</table>
+					</table>
+				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="timing" data-qs="">
+		<div class="track appview">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -252,44 +269,15 @@
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
 						</tr>
-					</div>
-				</table>
+					</table>
+				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="appview" data-qs="">
-			<hr class="label ok"/>
-			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
-				<div class="qsWrapper">
-					<table class="queryString">
-						<tr>
-							<td class="key">utmdt</td>
-							<td class="value">Direct Performance agora é dp6</td>
-						</tr>
-						<tr>
-							<td class="key">utmp</td>
-							<td class="value">/</td>
-						</tr>
-						<tr>
-							<td class="key">utmac</td>
-							<td class="value">UA-3635138-1</td>
-						</tr>
-						<tr>
-							<td class="key">utmcc</td>
-							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
-						</tr>
-					</div>
-				</table>
-			</section>
-		</div>
-		<div class="track" data-type="pageview" data-qs="">
+		<div class="track pageview">
 			<hr class="label error"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -308,16 +296,15 @@
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
 						</tr>
-					</div>
-				</table>
+					</table>
+				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="exception" data-qs="">
+		<div class="track exception">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -336,16 +323,15 @@
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
 						</tr>
-					</div>
-				</table>
+					</table>
+				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
-		<div class="track" data-type="pageview" data-qs="">
+		<div class="track pageview">
 			<hr class="label ok"/>
 			<section class="info">
-				<p class="content">
-					/path/do/pageview
-				</p>
+				<p class="content">/path/do/pageview</p>
 				<div class="qsWrapper">
 					<table class="queryString">
 						<tr>
@@ -364,9 +350,10 @@
 							<td class="key">utmcc</td>
 							<td class="value">__utma=184251577.1809400349.1359037700.1363703497.1363809574.27;+__utmz=184251577.1363704734.24.5.utmcsr=plugin|utmccn=(not%20set)|utmcmd=(not%20set)</td>
 						</tr>
-					</div>
-				</table>
+					</table>
+				</div>
 			</section>
+			<a href="#" class="delete" title="Remove"></a>
 		</div>
 	</section>
 	<script src="js/jquery.js"></script>

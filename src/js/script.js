@@ -38,7 +38,7 @@ var PUDIM = window.PUDIM = (function(){
 	function objectToQuery(obj) {
 		var key, url = [];
 		for (key in obj) {
-			if (!obj.hasOwnProperty(key) || typeof opj[key] === object) return;
+			if (!obj.hasOwnProperty(key) || typeof obj[key] === 'object') return;
 			url.push(key + '=' + obj[key]);
 		}
 		return url.join('&');
@@ -207,9 +207,11 @@ var PUDIM = window.PUDIM = (function(){
 		info: chrome.runtime.getManifest(),
 		util: {
 			queryToObject: queryToObject,
+			objectToQuery: objectToQuery,
 			pub: publish,
 			sub: subscribe
 		}
 	};
 }());
+
 chrome.devtools.network.onRequestFinished.addListener(PUDIM.init);
