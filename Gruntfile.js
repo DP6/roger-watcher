@@ -124,7 +124,7 @@ module.exports = function(grunt) {
           {
             cwd: 'src/',
             expand: true,
-            src: ['manifest.json', 'img/*', 'js/jquery.js'],
+            src: ['manifest.json', 'icons/*', 'img/*', 'js/jquery.js'],
             dest: 'dist/'
           }
         ]

@@ -4,9 +4,9 @@
   "version": "0.6.5",
   "icons": {
     "16": "img/min-16.png",
-    "36": "img/min-36.png",
-    "48": "img/min-48.png",
-    "128": "img/min-128.png"
+    "36": "img/full-36.png",
+    "48": "img/full-48.png",
+    "128": "img/full-128.png"
   },
   "permissions": [
     "tabs",

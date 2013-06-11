@@ -56,45 +56,30 @@ header {
 		color:#323232;
 		text-decoration: none;
 	}
-	.filter .pageview, .track.pageview .info{
+	.filter .pageview, .track.pageview {
 		background-image: url('../img/ico-pageview.png');
 	}
-	.filter .event, .track.event .info{
+	.filter .event, .track.event {
 		background-image: url('../img/ico-event.png');
 	}
-	.filter .social, .track.social .info{
+	.filter .social, .track.social {
 		background-image: url('../img/ico-social.png');
 	}
-	.filter .transaction, .track.transaction .info{
+	.filter .transaction, .track.transaction {
 		background-image: url('../img/ico-transaction.png');
 	}
-	.filter .item, .track.item .info{
+	.filter .item, .track.item {
 		background-image: url('../img/ico-item.png');
 	}
-	.filter .timing, .track.timing .info{
+	.filter .timing, .track.timing {
 		background-image: url('../img/ico-timing.png');
 	}
-	.filter .appview, .track.appview .info{
+	.filter .appview, .track.appview {
 		background-image: url('../img/ico-appview.png');
 	}
-	.filter .exception, .track.exception .info{
+	.filter .exception, .track.exception {
 		background-image: url('../img/ico-exception.png');
 	}
-
-.qsWrapper {
-	cursor: auto;
-	display: none;
-	overflow: auto;
-	max-width: 100%;
-}
-
-	.queryString {
-		margin-top: 5px;
-	}
-
-		.queryString .key{
-			font-weight: bold;
-		}
 
 .clear {
 	background-color: #eeeeee;
@@ -124,43 +109,32 @@ header {
 }
 
 .track{
-	margin: 5px auto;
-	width: 99%;
+	margin: 5px 1%;
 	background-color: #f5f5f5;
 	border:1px solid: #dfdfdf;
 	border-radius: 3px;
 	box-shadow: 1px 1px 3px #888888;
 	overflow: hidden;
 	cursor: pointer;
-	transition: all 0.25s;
+	background-position: 5px 4px;
+	background-repeat: no-repeat;
+	background-size: 18px;
 	position: relative;
 }
-	.info{
-		margin: 4px 8px 2px;
-		width: 98%;
-		background-position: top -1px;
-		background-repeat: no-repeat;
-		background-size: 18px;
-	}
 	.label{
-		width: 94%;
-		margin: 0 auto -3px;
+		margin: 0 3% -3px;
 		height: 3px;
 		border-radius: 0 10px;
-		background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
-		/* background: -webkit-linear-gradient(left, #1b9ed5 0%,#0366a3 99%); */
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 10%, transparent 80%, rgba(0, 0, 0, 0.3));
 		background-color: #1b9ed5;
 	}
 	.label.ok{
-		/* background: -webkit-linear-gradient(left, #87c23f 0%,#179844 99%); */
 		background-color: #87c23f;
 	}
 	.label.warn{
-		/* background: -webkit-linear-gradient(left, #fbab3d 0%,#f58222 99%); */
 		background-color: #fbab3d;
 	}
 	.label.error, .track.exception .label{
-		/* background: -webkit-linear-gradient(left, #ff5a5a 0%,#bd1b1b 99%) !important; */
 		background-color: #ff5a5a;
 	}
 	.type{
@@ -170,7 +144,7 @@ header {
 		margin-top: 2px;
 	}
 	.content{
-		margin: 0 26px 0 24px;
+		padding: 4px 26px 3px 24px;
 		white-space: nowrap;
 		overflow: hidden;
 		line-height: 18px;
@@ -181,28 +155,39 @@ header {
 	}
 	.delete {
 		display: none;
-		float: right;
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 4px;
 		width: 24px;
-		height: 24px;
+		height: 18px;
+		background-color: #f5f5f5;
 		background-size: 16px;
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-image: url('../img/ico-del.png');
 	}
-/* tabela zebrada */
-table{
-	border-collapse: collapse;
-	width:100%;	
+
+.qsWrapper {
+	cursor: auto;
+	display: none;
+	overflow: auto;
+	max-width: 100%;
 }
-	tr:nth-child(2n+1) {
-		background-color: #dfdfdf;
+	.queryString {
+		border-collapse: collapse;
+		width:100%;	
 	}
-		td{
-			padding:0.2em;
+		.queryString tr:nth-child(2n+1) {
+			background-color: #e0e0e0;
 		}
+			.queryString td{
+				padding:0.2em 0.5em;
+			}
+			.queryString td:first-child{
+				font-weight: bold;
+				white-space: nowrap;
+				width: 68px;
+			}
 /* classes para filtro */
 .filtrado .track {
 	display: none;
