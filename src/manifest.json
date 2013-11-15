@@ -3,10 +3,10 @@
   "description": "A validator for Universal Analytics implementations",
   "version": "0.6.5",
   "icons": {
-    "16": "img/min-16.png",
-    "36": "img/full-36.png",
-    "48": "img/full-48.png",
-    "128": "img/full-128.png"
+    "16": "img/min16.png",
+    "36": "img/icon36.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
   },
   "permissions": [
     "tabs",
