@@ -1,12 +1,13 @@
 {
   "name": "Roger Watcher",
+  "short_name": "rogerwatcher",
   "description": "A validator for Universal Analytics implementations",
-  "version": "0.6.5",
+  "version": "0.7.0",
   "icons": {
-    "16": "img/min16.png",
-    "36": "img/icon36.png",
-    "48": "img/icon48.png",
-    "128": "img/icon128.png"
+    "16": "icons/min16.png",
+    "36": "icons/icon36.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
   "permissions": [
     "tabs",
@@ -15,9 +16,6 @@
     "webRequestBlocking",
     "<all_urls>"
   ],
-  "background": {
-    "scripts": ["js/background.js"]
-  },
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     "*"

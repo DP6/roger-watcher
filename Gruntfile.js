@@ -1,17 +1,17 @@
 /*global module:false*/
 module.exports = function(grunt) {
   var jshintopts = {
-    curly : false,
-    eqeqeq  : true,
-    immed : true,
-    latedef : false,
-    newcap  : true,
-    evil  : true,
-    noarg : true,
-    sub   : true,
-    undef : false,
-    boss  : true,
-    eqnull  : true,
+    curly: false,
+    eqeqeq: true,
+    immed: true,
+    latedef: false,
+    newcap: true,
+    evil: true,
+    noarg: true,
+    sub: true,
+    undef: false,
+    boss: true,
+    eqnull: true,
     smarttabs: true,
     loopfunc: true
   };
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         replacements: [{
           from: /<!-- @dev-css [\s\S]*? dev-css@ -->/img,
           to: '<link rel="stylesheet" type="text/css" href="css/all.css"/>'
-        }, { 
+        }, {
           from: /<!-- @dev-js [\s\S]*? dev-js@ -->/img,
           to: '<script src="js/jquery.js"></script><script src="js/all.js"></script>'
         }]
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
     cssmin: {
       combine: {
         files: {
-          'dist/css/all.css' : ['src/css/normalize.css', 'src/css/style.css']
+          'dist/css/all.css': ['src/css/normalize.css', 'src/css/style.css']
         }
       }
     },
@@ -92,8 +92,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/js/all.js' : ['src/js/script.js','src/js/eventos.js','src/js/tagueamento.js'],
-          'dist/js/background.js': 'src/js/background.js',
+          'dist/js/all.js': ['src/js/rules.js', 'src/js/metadata.js', 'src/js/script.js', 'src/js/eventos.js', 'src/js/tagueamento.js'],
+          // 'dist/js/background.js': 'src/js/background.js',
           'dist/js/devtools.js': 'src/js/devtools.js'
         }
       }
@@ -101,12 +101,16 @@ module.exports = function(grunt) {
     jshint: {
       options: jshintopts,
       globals: {
-        exports : true,
-        module  : false,
-        jquery  : true
+        exports: true,
+        module: false,
+        jquery: true
       },
-      gruntfile: { src: 'Gruntfile.js' },
-      js: { src: ['src/js/script.js','src/js/eventos.js','src/js/tagueamento.js'] }
+      gruntfile: {
+        src: 'Gruntfile.js'
+      },
+      js: {
+        src: ['src/js/script.js', 'src/js/eventos.js', 'src/js/tagueamento.js']
+      }
     },
     uglify: {
       options: {
@@ -114,20 +118,19 @@ module.exports = function(grunt) {
       },
       compile: {
         files: {
-          'dist/js/all.js' : 'dist/js/all.js'
+          // 'dist/js/all.js': 'dist/js/all.js',
+          // 'dist/js/devtools.js': 'dist/js/devtools.js'
         }
       }
     },
     copy: {
       compile: {
-        files: [
-          {
-            cwd: 'src/',
-            expand: true,
-            src: ['manifest.json', 'icons/*', 'img/*', 'js/jquery.js'],
-            dest: 'dist/'
-          }
-        ]
+        files: [{
+          cwd: 'src/',
+          expand: true,
+          src: ['manifest.json', 'icons/*', 'img/*', 'js/jquery.js'],
+          dest: 'dist/'
+        }]
       }
     },
     clean: ['dist']

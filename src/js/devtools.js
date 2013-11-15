@@ -3,8 +3,8 @@ chrome.devtools.panels.create("Roger Watcher", "../img/min-32.png", "../panel.ht
 	var button = panel.createStatusBarButton("../img/ico-remove.png", "Limpar disparos", false);
 
 	panel.onShown.addListener(function tmp(panelWindow){
+		var _window = panelWindow;
 		panel.onShown.removeListener(tmp);
-		_window = panelWindow;
 
 		button.onClicked.addListener(function btnClear(){
 			_window.PUDIM.clear();

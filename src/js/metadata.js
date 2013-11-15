@@ -1,4 +1,4 @@
-metadata = {
+window.metadata = {
 	universal_analytics: {
 		// Hit
 		t: {
