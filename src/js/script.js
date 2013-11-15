@@ -1,4 +1,4 @@
-/* global jQuery: false, window: false, document: false, chrome: false */ 
+/* global jQuery: false, window: false, document: false, chrome: false */
 var PUDIM = window.PUDIM = (function(){
 	var notifier, body, panel, modules, commonRules, requiredParameters, metadata, info;
 
@@ -58,17 +58,7 @@ var PUDIM = window.PUDIM = (function(){
 
 	modules = {
 		universal_analytics: {
-			template: (function(){
-				var html;
-				jQuery.ajax({
-					url: 'template.html',
-					async: false,
-					success: function(data) {
-						html = jQuery(data);
-					}
-				});
-				return html;
-			}()),
+			template: jQuery(document.getElementById('template-universal').outerHTML),
 			parseByType: function parseByType(type, params) {
 				var errors = [];
 				if (requiredParameters[type]) {
