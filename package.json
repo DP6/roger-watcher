@@ -1,13 +1,18 @@
 {
   "name": "Roger-Watcher",
   "description": "A validator for Universal Analytics implementations",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "author": "dp6",
   "homepage": "http://www.digitalcube.com.br/",
   "repository": {
     "type": "git",
     "url": "https://github.com/digitalinc/roger-watcher.git"
   },
+  "contributors": [
+    {
+      "name": "Paychex, Inc."
+    }
+  ],
   "bugs": {
     "url": "https://github.com/digitalinc/roger-watcher/issues"
   },
