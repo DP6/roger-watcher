@@ -37,9 +37,9 @@ var PUDIM = window.PUDIM = (function() {
 					clone.find('table.queryString').html(objectToRows(obj.parameters));
 					panel.append(clone);
 				},
-				handler: function (url) {
+				handler: function (url, content) {
 					var qs = url.slice(url.indexOf('?') + 1),
-						params = queryToObject(qs),
+						params = queryToObject(content || qs),
 						label = '',
 						status = 'ok',
 						errors;
@@ -165,9 +165,10 @@ var PUDIM = window.PUDIM = (function() {
 	}
 
 	function init(details) {
-		var url = details.request.url;
+		var url = details.request.url,
+			content = details.request.method === "POST" && details.request.postData.text;
 		if (commonRules.universal_analytics(url)) {
-			modules.universal_analytics.handler(url);
+			modules.universal_analytics.handler(url, content);
 			if (autoscroll) autoscroll();
 		}
 	}

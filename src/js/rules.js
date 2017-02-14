@@ -1,6 +1,6 @@
 window.commonRules = {
 	regex: {
-		universal_analytics_url: /^https?:\/\/(www\.)?google-analytics.com\/collect\?/i,
+		universal_analytics_url: /^https?:\/\/(www\.)?google-analytics.com\/collect\??/i,
 		trackingID: /^UA\-\d+\-\d{1,2}$/
 	},
 	universal_analytics: function(url) {
