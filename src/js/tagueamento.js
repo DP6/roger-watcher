@@ -1,53 +1,49 @@
 function Tracker(id) {
-	var tracker = this;
-	tracker.id = id;
-	tracker.cid = false;
-	tracker.queue = [];
-	tracker.hostname = encodeURIComponent(document.location.hostname);
-	tracker.title = encodeURIComponent(document.title);
+	this.id = id;
+	this.cid = false;
+	this.queue = [];
+	this.page = encodeURIComponent('/panel');
+	this.hostname = encodeURIComponent('www.dp6.com.br');
+	this.title = encodeURIComponent('Roger Watcher');
 
-	chrome.storage.sync.get('dp6_cid', function(items) {
-		var hit;
+	chrome.storage.sync.get('dp6_cid', items => {
 		if (items.dp6_cid) {
-			tracker.cid = items.dp6_cid;
+			this.cid = items.dp6_cid;
 		} else {
-			tracker.cid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			this.cid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
 				var r = Math.random() * 16 | 0,
 					v = c === 'x' ? r : (r & 0x3 | 0x8);
 				return v.toString(16);
 			});
 			chrome.storage.sync.set({
-				dp6_cid: tracker.cid
+				dp6_cid: this.cid
 			});
 		}
-		tracker.queue.forEach(function(hit) {
-			tracker.sendHit(hit);
-		});
-		delete tracker.queue;
+		this.queue.forEach(args => this.sendHit(...args));
+		delete this.queue;
 	});
-
 }
 
 Tracker.prototype.sendHit = function(params) {
 	if (!this.cid) return this.queue.push(arguments);
 
-	var basehit = [
+	let payload = [
 		'v=1', // Tag version
-		'tid=' + this.id, // Account ID
-		'cid=' + this.cid, // User ID (Unique, randomly generated)
-		'sr=' + screen.width + 'x' + screen.height, // Screen resolution
-		'vp=' + window.innerWidth + 'x' + window.innerHeight, // Viewport size
-		'sd=' + screen.colorDepth + '-bits', // Color depth
-		params
-	];
+		`tid=${this.id}`,
+		`cid=${this.cid}`,
+		`sr=${screen.width}x${screen.height}`,
+		`vp=${window.innerWidth}x${window.innerHeight}`,
+		`sd=${screen.colorDepth}-bits`,
+		`dh=${this.hostname}`,
+		`dp=${this.page}`,
+		`dt=${this.title}`,
+		`cd1=${PUDIM.info.version}`,
+		...params,
+		`z=${(new Date() | 0)}`
+	].join('&');
 
-	params = basehit.join('&') + '&z=' + (new Date() | 0);
-
-	new Image().src = 'https://www.google-analytics.com/collect?' + params;
-
-	// var xhr = new XMLHttpRequest();
-	// xhr.open('POST', 'https://www.google-analytics.com/collect', true);
-	// xhr.send(hit);
+	navigator.sendBeacon('https://www.google-analytics.com/collect', payload);
+	//new Image().src = 'https://www.google-analytics.com/collect?' + payload;
 };
 
 Tracker.prototype.set = function(param, value) {
@@ -56,28 +52,25 @@ Tracker.prototype.set = function(param, value) {
 
 Tracker.prototype.pageview = function(page) {
 	page = encodeURIComponent(page);
-	this.sendHit('t=pageview&dh=' + this.hostname + '&dp=' + page + '&dt=' + this.title);
+	this.sendHit(['t=pageview']);
 };
 
 Tracker.prototype.event = function(category, action, label, value) {
 	category = encodeURIComponent(category || '');
 	action = encodeURIComponent(action || '');
 	label = encodeURIComponent(label || '');
-	value = encodeURIComponent(value || 0);
-	this.sendHit('t=event&ec=' + category + '&ea=' + action + '&el=' + label + '&ev=' + value);
+	this.sendHit(['t=event', `ec=${category}`, `ea=${action}`, `el=${label}`, `ev=${value|0}`]);
 };
 
 Tracker.prototype.timing = function(category, variable, time, label) {
 	category = encodeURIComponent(category || '');
 	variable = encodeURIComponent(variable || '');
-	time = encodeURIComponent(time || 0);
 	label = encodeURIComponent(label || '');
-	this.sendHit('t=timing&utc=' + category + '&utv=' + variable + '&utt=' + time + '&utl=' + label);
+	this.sendHit(['t=timing', `utc=${category}`, `utv=${variable}`, `utt=${time|0}`, `utl=${label}`]);
 };
 
 var ga = new Tracker('UA-3635138-29');
-ga.set('title', PUDIM.info.name + '@' + PUDIM.info.version);
-ga.pageview('/' + PUDIM.info.name + '/' + PUDIM.info.version);
+ga.pageview();
 
 jQuery('#logo').mousedown(function() {
 	ga.event('Cabeçalho', 'Clique', 'Logo');
@@ -88,8 +81,12 @@ jQuery('.filter').on('click', 'a', function() {
 	ga.event('Cabeçalho', action, this.className);
 });
 
-jQuery('.clear').on('click', function() {
+jQuery('.clear-filter').on('click', function() {
 	ga.event('Cabeçalho', 'Limpar Filtros', 'Limpar Filtros');
+});
+
+jQuery('.clear-report').on('click', function() {
+	ga.event('Cabeçalho', 'Limpar Relatório', 'Limpar Relatório');
 });
 
 jQuery('#busca').on('change', function() {

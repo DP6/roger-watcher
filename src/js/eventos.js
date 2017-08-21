@@ -5,9 +5,13 @@ jQuery('.filter').on('click', 'a', function(){
 	PUDIM.panel.toggleClass(this.className).toggleClass('filtrado', jQuery('.checked').length > 0);
 });
 
-jQuery('.clear').on('click',function(){
+jQuery('.clear-filter').on('click',function(){
 	jQuery('.checked').removeClass('checked');
 	PUDIM.panel.removeClass();
+});
+
+jQuery('.clear-report').on('click',function(){
+	PUDIM.clear();
 });
 
 jQuery('#busca').on('keyup', function() {

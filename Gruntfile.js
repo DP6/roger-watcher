@@ -13,7 +13,8 @@ module.exports = function(grunt) {
     boss: true,
     eqnull: true,
     smarttabs: true,
-    loopfunc: true
+    loopfunc: true,
+    esversion: 6
   };
 
   // Project configuration.
@@ -128,7 +129,7 @@ module.exports = function(grunt) {
         files: [{
           cwd: 'src/',
           expand: true,
-          src: ['manifest.json', 'icons/*', 'img/*', 'js/jquery.js'],
+          src: ['manifest.json', 'icons/*', 'img/*', 'js/jquery.js', 'devtools.html'],
           dest: 'dist/'
         }]
       }
@@ -149,7 +150,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-text-replace');
 
   // Default task.
-  grunt.registerTask('html', ['replace', 'htmlcompressor']);
+  grunt.registerTask('html', ['replace'/*, 'htmlcompressor'*/]);
   grunt.registerTask('css', [ /*'csslint', */ 'cssmin']);
   grunt.registerTask('js', ['concat', 'jshint', 'uglify']);
   grunt.registerTask('default', ['clean', 'html', 'css', 'js', 'copy']);

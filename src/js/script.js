@@ -164,11 +164,14 @@ var PUDIM = window.PUDIM = (function() {
 		}
 	}
 
-	function init(details) {
-		var url = details.request.url,
-			content = details.request.method === "POST" && details.request.postData.text;
+	function init(request) {
+		let url = request.request.url;
 		if (commonRules.universal_analytics(url)) {
-			modules.universal_analytics.handler(url, content);
+			if (request.request.method === "GET") {
+				modules.universal_analytics.handler(url);
+			} else {
+				request.request.postData.text.split('\n').forEach(row => modules.universal_analytics.handler(url, row));
+			}
 			if (autoscroll) autoscroll();
 		}
 	}
