@@ -39,18 +39,18 @@
     "debugger"
   ],
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-csslint": "^2.0.0",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-htmlmin": "^2.4.0",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-uglify": "^3.0.1",
-    "grunt-replace": "^1.0.1",
+    "grunt-contrib-uglify": "^3.4.0",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-htmlcompressor": "^0.1.8",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-contrib-csslint": "^2.0.0",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-text-replace": "^0.4.0",
-    "grunt-contrib-copy": "^1.0.0"
+    "grunt-replace": "^1.0.1",
+    "grunt-text-replace": "^0.4.0"
   }
 }
