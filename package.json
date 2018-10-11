@@ -3,10 +3,10 @@
   "description": "A validator for Universal Analytics implementations",
   "version": "0.6.6",
   "author": "dp6",
-  "homepage": "http://www.digitalcube.com.br/",
+  "homepage": "http://www.dp6.com.br/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalinc/roger-watcher.git"
+    "url": "https://github.com/dp6/roger-watcher.git"
   },
   "contributors": [
     {
@@ -14,12 +14,12 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/digitalinc/roger-watcher/issues"
+    "url": "https://github.com/dp6/roger-watcher/issues"
   },
   "licenses": [
     {
       "type": "GNU",
-      "url": "https://github.com/digitalinc/roger-watcher/blob/master/LICENSE.md"
+      "url": "https://github.com/dp6/roger-watcher/blob/master/LICENSE.md"
     }
   ],
   "main": "src",
@@ -43,14 +43,9 @@
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-csslint": "^2.0.0",
     "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-htmlmin": "^3.0.0",
     "grunt-contrib-jshint": "^2.0.0",
-    "grunt-contrib-uglify": "^4.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-htmlcompressor": "^0.1.8",
-    "grunt-replace": "^1.0.1",
     "grunt-text-replace": "^0.4.0"
-  }
+  },
+  "dependencies": {}
 }
