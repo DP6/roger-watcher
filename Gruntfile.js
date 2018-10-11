@@ -1,22 +1,5 @@
 /*global module:false*/
-module.exports = function(grunt) {
-  var jshintopts = {
-    curly: false,
-    eqeqeq: true,
-    immed: true,
-    latedef: false,
-    newcap: true,
-    evil: true,
-    noarg: true,
-    sub: true,
-    undef: false,
-    boss: true,
-    eqnull: true,
-    smarttabs: true,
-    loopfunc: true,
-    esversion: 6
-  };
-
+module.exports = grunt => {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -100,7 +83,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      options: jshintopts,
+      options: grunt.file.readJSON('jshint.json'),
       globals: {
         exports: true,
         module: false,
