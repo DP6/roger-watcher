@@ -35,7 +35,7 @@ var PUDIM = window.PUDIM = (function() {
 					clone.find('.label').addClass(obj.status);
 					clone.find('.content').attr('title', obj.content).text(obj.content);
 					clone.find('table.queryString').html(objectToRows(obj.parameters));
-					panel.append(clone);
+					panel.prepend(clone);
 				},
 				handler: function (url, content) {
 					var qs = url.slice(url.indexOf('?') + 1),
