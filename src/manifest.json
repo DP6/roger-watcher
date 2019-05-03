@@ -24,4 +24,3 @@
   "content_security_policy": "script-src 'self' https://www.google-analytics.com; img-src *; object-src 'self'",
   "manifest_version": 2
 }
-

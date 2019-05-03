@@ -1,204 +1,202 @@
 /* global jQuery: false, window: false, document: false, chrome: false */
-var PUDIM = window.PUDIM = (function() {
-	var info = chrome.runtime.getManifest(),
-		notifier = jQuery({}),
-		body = jQuery(document.body),
-		panel = jQuery('#panel'),
-		filter = jQuery('#filter'),
-		busca = jQuery('#busca'),
-		modules = {
-			universal_analytics: {
-				template: jQuery(document.getElementById('template-universal').innerHTML),
-				parseByType: function (type, params) {
-					var errors = [];
+var RW = (window.RW = (function() {
+  const info = chrome.runtime.getManifest();
+  const notifier = jQuery({});
+  const body = jQuery(document.body);
+  const panel = jQuery('#panel');
+  const filter = jQuery('#filter');
+  const busca = jQuery('#busca');
+  const requiredParameters = {
+    all: ['v', 't', 'cid', 'tid'],
+    social: ['sn', 'sa', 'st'],
+    transaction: ['ti'],
+    item: ['ti', 'in']
+  };
+  const modules = {
+    universal_analytics: {
+      template: jQuery(jQuery('#template-universal').html()),
+      parseByType(type, params) {
+        if (type instanceof Array) {
+          return Array.from(arguments).map(arr =>
+            modules.universal_analytics.parseByType.apply(null, arr)
+          );
+        } else if (requiredParameters[type]) {
+          return requiredParameters[type].filter(
+            param => params[param] === undefined
+          );
+        }
 
-					if (type instanceof Array) {
-						type = type.map.call(arguments, function(arr) {
-							return modules.universal_analytics.parseByType.apply(null, arr);
-						});
-						errors = errors.concat.apply(errors, type);
-					} else if (requiredParameters[type]) {
-						requiredParameters[type].forEach(function(param) {
-							if (params[param] === undefined) {
-								errors.push(param);
-							}
-						});
-					}
+        return [];
+      },
+      appendNewHit(obj) {
+        var clone = this.template.clone();
 
-					return errors;
-				},
-				appendNewHit: function (obj) {
-					var clone = this.template.clone();
+        clone.addClass(obj.parameters.t).data('qs', obj.queryString);
+        clone.find('.label').addClass(obj.status);
+        clone
+          .find('.content')
+          .attr('title', obj.content)
+          .text(obj.content);
+        clone.find('table.queryString').html(objectToRows(obj.parameters));
+        panel.append(clone);
+      },
+      handler(url = '', qs = url.slice(url.indexOf('?') + 1)) {
+        const params = queryToObject(qs);
+        let status = 'ok';
+        let content = '';
 
-					clone.addClass(obj.parameters.t).attr('data-qs', obj.queryString);
-					// clone.addClass(params.t).data('qs', qs);
-					clone.find('.label').addClass(obj.status);
-					clone.find('.content').attr('title', obj.content).text(obj.content);
-					clone.find('table.queryString').html(objectToRows(obj.parameters));
-					panel.append(clone);
-				},
-				handler: function (url, content) {
-					var qs = url.slice(url.indexOf('?') + 1),
-						params = queryToObject(content || qs),
-						label = '',
-						status = 'ok',
-						errors;
+        switch (params.t) {
+          case 'pageview':
+            if (params.dp) {
+              content = (params.dh || '') + params.dp;
+            } else {
+              content = params.dl;
+            }
+            // color = "#3333CC";
+            break;
+          case 'event':
+            content = [params.ec, params.ea, params.el]
+              .map(val => val || '<empty>')
+              .join(' > ');
+            // color = "#33CC33";
+            break;
+          case 'transaction':
+            content = `Trans: ${params.ti} > ${params.tr}`;
+            // color = "#CC33CC";
+            break;
+          case 'item':
+            content = `${params.iv} > ${params.in}`;
+            // color = "#CC3380";
+            break;
+          case 'social':
+            content = `${params.sn} > ${params.sa}`;
+            // color = "#33CCCC";
+            break;
+          case 'timing':
+            content = [params.utc, params.utv, params.utl, params.utt].join(
+              ' > '
+            );
+            // color = "#A66F00";
+            break;
+        }
 
-					switch (params.t) {
-						case "pageview":
-							if (params.dp) {
-								label = (params.dh || "") + params.dp;
-							} else {
-								label = params.dl;
-							}
-							// color = "#3333CC";
-							break;
-						case "event":
-							label = params.ec + "%20%3E%20" + params.ea + "%20%3E%20" + (params.el || '<empty>') + "%20%3E%20" + (params.ev || 0);
-							// color = "#33CC33";
-							break;
-						case "transaction":
-							label = "Trans: " + params.ti + "%20%3E%20" + params.tr;
-							// color = "#CC33CC";
-							break;
-						case "item":
-							label = params.iv + "%20%3E%20" + params['in'];
-							// color = "#CC3380";
-							break;
-						case "social":
-							label = params.sn + "%20%3E%20" + params.sa;
-							// color = "#33CCCC";
-							break;
-						case "timing":
-							label = params.utc + "%20%3E%20" + params.utv + "%20%3E%20" + params.utl + "%20%3E%20" + params.utt;
-							// color = "#A66F00";
-							break;
-					}
+        const errors = this.parseByType(['all', params], [params.t, params]);
 
-					errors = this.parseByType(['all', params], [params.t, params]);
+        if (commonRules.universal_analytics_url(url) === false) {
+          errors.push(url);
+        }
 
-					if (commonRules.universal_analytics_url(url) === false) {
-						errors.push(url);
-					}
+        if (errors.length) {
+          status = 'error';
+        }
 
-					if (errors.length) {
-						status = 'error';
-					}
+        this.appendNewHit({
+          parameters: params,
+          queryString: qs,
+          status,
+          content
+        });
 
-					this.appendNewHit({
-						parameters: params,
-						queryString: qs,
-						status: status,
-						content: decode(label)
-					});
-					publish('newhit', url);
+        publish('newhit', url);
 
-					if (panel.hasClass('filtrado') && panel.hasClass(params.t) === false) {
-						panel.find();
-					}
-				}
-			}
-		},
-		requiredParameters = {
-			all: ['v', 't', 'cid', 'tid'],
-			social: ['sn', 'sa', 'st'],
-			transaction: ['ti'],
-			item: ['ti', 'in']
-		};
+        if (panel.hasClass('filtrado') && !panel.hasClass(params.t)) {
+          panel.find();
+        }
+      }
+    }
+  };
 
-	function clear() {
-		jQuery('.track').remove();
-		busca.val('');
-	}
+  function clear() {
+    jQuery('.track').remove();
+    busca.val('');
+  }
 
-	function publish(type, data) {
-		notifier.trigger(type, data);
-	}
+  function publish(type, data) {
+    notifier.trigger(type, data);
+  }
 
-	function subscribe(type, func) {
-		notifier.on(type, func);
-	}
+  function subscribe(type, func) {
+    notifier.on(type, func);
+  }
 
-	function queryToObject(url) {
-		var obj = {};
+  function queryToObject(url = '') {
+    if (url.startsWith('?')) {
+      url = url.slice(1);
+    }
 
-		if (url[0] === '?') {
-			url = url.slice(1);
-		}
+    return url.split('&').reduce((acc, next) => {
+      var [key, ...val] = next.split('=');
+      acc[key] = val.join('=');
+      return acc;
+    }, {});
+  }
 
-		url.split('&').forEach(function(value) {
-			var param = value.split('=');
-			obj[param[0]] = param[1];
-		});
+  function objectToQuery(obj) {
+    return Object.keys(obj)
+      .reduce((acc, next) => acc.concat(`${next}=${obj[next]}`), [])
+      .join('&');
+  }
 
-		return obj;
-	}
+  function objectToRows(obj) {
+    const metadata = window.metadata.universal_analytics;
+    const html = Object.keys(obj)
+      .filter(key => key.startsWith('_'))
+      .map(key => {
+        const keyName = metadata[key] ? metadata[key].name : key;
+        return `<td class="key" title="${key}">${keyName}</td>
+					<td class="value" title="${obj[key]}">${decode(obj[key])}</td>`;
+      });
+    return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
+  }
 
-	function objectToQuery(obj) {
-		var key, url = [];
-		for (key in obj) {
-			if (typeof obj[key] === 'object' && obj.hasOwnProperty(key)) {
-				url.push(key + '=' + obj[key]);
-			}
-		}
-		return url.join('&');
-	}
+  function decode(str) {
+    try {
+      return decodeURIComponent(str);
+    } catch ($$e) {
+      return unescape(str);
+    }
+  }
 
-	function objectToRows(obj) {
-		var html = [],
-			metadata = window.metadata.universal_analytics,
-			key;
-		for (key in obj) {
-			if (key[0] !== '_' && obj.hasOwnProperty(key)) {
-				html.push('<td class="key" title="' + key + '">' + (metadata[key] ? metadata[key].name : key) + '</td><td class="value" title="' + obj[key] + '">' + decode(obj[key]) + '</td>');
-			}
-		}
-		return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
-	}
+  function init({ request: { url, method, postData } }) {
+    if (commonRules.universal_analytics(url)) {
+      if (method === 'GET') {
+        modules.universal_analytics.handler(url);
+      } else {
+        postData.text
+          .split('\n')
+          .forEach(row => modules.universal_analytics.handler(url, row));
+      }
+      if (RW.autoscroll) doScroll();
+    }
+  }
 
-	function decode(str) {
-		try {
-			return decodeURIComponent(str);
-		} catch ($$e) {
-			return unescape(str);
-		}
-	}
+  function doScroll() {
+    body.stop(true, true).animate(
+      {
+        scrollTop: panel.height()
+      },
+      'slow'
+    );
+  }
 
-	function init(request) {
-		let url = request.request.url;
-		if (commonRules.universal_analytics(url)) {
-			if (request.request.method === "GET") {
-				modules.universal_analytics.handler(url);
-			} else {
-				request.request.postData.text.split('\n').forEach(row => modules.universal_analytics.handler(url, row));
-			}
-			if (autoscroll) autoscroll();
-		}
-	}
+  // Retorna o PUDIM!
+  return {
+    init,
+    body,
+    filter,
+    busca,
+    panel,
+    modules,
+    clear,
+    info,
+    autoscroll: false,
+    util: {
+      queryToObject,
+      objectToQuery,
+      pub: publish,
+      sub: subscribe
+    }
+  };
+})());
 
-	function autoscroll() {
-		body.stop(true, true).animate({
-			scrollTop: panel.height()
-		}, 'slow');
-	}
-
-	// Retorna o PUDIM!
-	return {
-		init: init,
-		body: body,
-		filter: filter,
-		busca: busca,
-		panel: panel,
-		modules: modules,
-		clear: clear,
-		info: info,
-		util: {
-			queryToObject: queryToObject,
-			objectToQuery: objectToQuery,
-			pub: publish,
-			sub: subscribe
-		}
-	};
-}());
-
-chrome.devtools.network.onRequestFinished.addListener(PUDIM.init);
+chrome.devtools.network.onRequestFinished.addListener(RW.init);
