@@ -41,7 +41,7 @@ var RW = (window.RW = (function() {
         panel.append(clone);
       },
       handler(url = '', qs = url.slice(url.indexOf('?') + 1)) {
-        const params = queryToObject(qs);
+        const params = queryToObject(decode(qs));
         let status = 'ok';
         let content = '';
 
@@ -80,7 +80,10 @@ var RW = (window.RW = (function() {
             break;
         }
 
-        const errors = this.parseByType(['all', params], [params.t, params]);
+        const errors = this.parseByType(
+          ['all', params],
+          [params.t, params]
+        ).filter(error => error.length > 0);
 
         if (commonRules.universal_analytics_url(url) === false) {
           errors.push(url);
@@ -140,7 +143,7 @@ var RW = (window.RW = (function() {
   function objectToRows(obj) {
     const metadata = window.metadata.universal_analytics;
     const html = Object.keys(obj)
-      .filter(key => key.startsWith('_'))
+      .filter(key => !key.startsWith('_'))
       .map(key => {
         const keyName = metadata[key] ? metadata[key].name : key;
         return `<td class="key" title="${key}">${keyName}</td>
