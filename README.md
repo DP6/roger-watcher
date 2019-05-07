@@ -1,7 +1,7 @@
 # Roger Watcher
 A powerful extension to validate the implementation of Universal Analytics.
 
-## Link da Loja do Chroem
+## Link da Loja do Chrome
 https://chrome.google.com/webstore/detail/roger-watcher/impckkpjcejdmacpmkpegegnpagddajk
 
 ## Overview
