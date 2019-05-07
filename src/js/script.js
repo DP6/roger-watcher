@@ -173,15 +173,6 @@ var RW = (window.RW = (function() {
     }
   }
 
-  function doScroll() {
-    body.stop(true, true).animate(
-      {
-        scrollTop: panel.height()
-      },
-      'slow'
-    );
-  }
-
   // Retorna o PUDIM!
   return {
     init,
