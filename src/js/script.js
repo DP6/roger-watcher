@@ -39,6 +39,7 @@ var RW = (window.RW = (function() {
           .text(obj.content);
         clone.find('table.queryString').html(objectToRows(obj.parameters));
         panel.append(clone);
+        if (RW.autoscroll) clone.get(0).scrollIntoView({behavior: 'smooth'});
       },
       handler(url = '', qs = url.slice(url.indexOf('?') + 1)) {
         const params = queryToObject(decode(qs));
@@ -169,7 +170,6 @@ var RW = (window.RW = (function() {
           .split('\n')
           .forEach(row => modules.universal_analytics.handler(url, row));
       }
-      if (RW.autoscroll) doScroll();
     }
   }
 
@@ -192,7 +192,7 @@ var RW = (window.RW = (function() {
     modules,
     clear,
     info,
-    autoscroll: false,
+    autoscroll: true,
     util: {
       queryToObject,
       objectToQuery,
