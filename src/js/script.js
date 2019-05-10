@@ -29,21 +29,20 @@ var RW = (window.RW = (function() {
         return [];
       },
       appendNewHit(obj) {
-        var clone = this.template.clone();
-
+        const clone = this.template.clone();
+        const content = decode(obj.content);
         clone.addClass(obj.parameters.t).data('qs', obj.queryString);
         clone.find('.label').addClass(obj.status);
         clone
           .find('.content')
-          .attr('title', obj.content)
-          .text(obj.content);
+          .attr('title', content)
+          .text(content);
         clone.find('table.queryString').html(objectToRows(obj.parameters));
         panel.append(clone);
-        if (RW.autoscroll) clone.get(0).scrollIntoView({behavior: 'smooth'});
+        if (RW.autoscroll) clone.get(0).scrollIntoView({ behavior: 'smooth' });
       },
       handler(url = '', qs = url.slice(url.indexOf('?') + 1)) {
-        const params = queryToObject(decode(qs));
-        let status = 'ok';
+        const params = queryToObject(qs);
         let content = '';
 
         switch (params.t) {
@@ -90,14 +89,10 @@ var RW = (window.RW = (function() {
           errors.push(url);
         }
 
-        if (errors.length) {
-          status = 'error';
-        }
-
         this.appendNewHit({
           parameters: params,
           queryString: qs,
-          status,
+          status: errors.length ? 'error' : 'ok',
           content
         });
 
@@ -129,7 +124,7 @@ var RW = (window.RW = (function() {
     }
 
     return url.split('&').reduce((acc, next) => {
-      var [key, ...val] = next.split('=');
+      const [key, ...val] = next.split('=');
       acc[key] = val.join('=');
       return acc;
     }, {});
@@ -146,9 +141,10 @@ var RW = (window.RW = (function() {
     const html = Object.keys(obj)
       .filter(key => !key.startsWith('_'))
       .map(key => {
-        const keyName = metadata[key] ? metadata[key].name : key;
+        const keyName = decode(metadata[key] ? metadata[key].name : key);
+        const value = decode(obj[key]);
         return `<td class="key" title="${key}">${keyName}</td>
-					<td class="value" title="${obj[key]}">${decode(obj[key])}</td>`;
+					<td class="value" title="${value}">${value}</td>`;
       });
     return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
   }
@@ -161,19 +157,23 @@ var RW = (window.RW = (function() {
     }
   }
 
-  function init({ request: { url, method, postData } }) {
+  function init({ url, method, requestBody, initiator }) {
+    if (initiator.includes('chrome-extension://')) return;
     if (commonRules.universal_analytics(url)) {
       if (method === 'GET') {
         modules.universal_analytics.handler(url);
       } else {
-        postData.text
-          .split('\n')
+        requestBody.raw
+          .map(function(data) {
+            return decodeURIComponent(
+              String.fromCharCode.apply(null, new Uint8Array(data.bytes))
+            );
+          })
           .forEach(row => modules.universal_analytics.handler(url, row));
       }
     }
   }
 
-  // Retorna o PUDIM!
   return {
     init,
     body,
@@ -193,4 +193,14 @@ var RW = (window.RW = (function() {
   };
 })());
 
-chrome.devtools.network.onRequestFinished.addListener(RW.init);
+chrome.webRequest.onBeforeRequest.addListener(
+  RW.init,
+  {
+    urls: [
+      '*://*.google-analytics.com/collect*',
+      '*://*.google-analytics.com/*/collect*'
+    ]
+  },
+  ['requestBody']
+);
+//chrome.devtools.network.onRequestFinished.addListener();

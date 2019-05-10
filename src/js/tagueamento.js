@@ -6,28 +6,29 @@ class Tracker {
     this.page = '/panel';
     this.hostname = 'roger.dp6.com.br';
     this.title = 'Roger Watcher';
-    try {
-      chrome.storage.sync.get('dp6_cid', items => {
-        if (items.dp6_cid) {
-          this.cid = items.dp6_cid;
-        } else {
-          this.cid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-            /[xy]/g,
-            function(c) {
-              var r = (Math.random() * 16) | 0,
-                v = c === 'x' ? r : (r & 0x3) | 0x8;
-              return v.toString(16);
-            }
-          );
-          chrome.storage.sync.set({
-            dp6_cid: this.cid
-          });
-        }
-        this.queue.forEach(args => this.sendHit(...args));
-      });
-    } catch ($$e) {
-      console.error($$e);
+  }
+
+  async init() {
+    const { dp6_cid } = await new Promise(resolve =>
+      chrome.storage.sync.get('dp6_cid', items => resolve(items))
+    );
+
+    if (dp6_cid) {
+      this.cid = dp6_cid;
+    } else {
+      this.cid = this.generateCid();
+      await new Promise(resolve =>
+        chrome.storage.sync.set({ dp6_cid: this.cid }, () => resolve())
+      );
     }
+    this.queue.forEach(args => this.sendHit(...args));
+  }
+  generateCid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0;
+      var v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
   sendHit(params) {
     if (!this.cid) return this.queue.push(arguments);
@@ -49,8 +50,8 @@ class Tracker {
     navigator.sendBeacon('https://www.google-analytics.com/collect', payload);
   }
   pageview(page) {
-    if (page) this.page = page;
-    this.sendHit({ t: 'pageview' });
+    const extra = page ? {} : { dp: page };
+    this.sendHit({ t: 'pageview', ...extra });
   }
   event(ec = '', ea = '', el = '', ev = 0) {
     this.sendHit({
@@ -73,6 +74,7 @@ class Tracker {
 }
 
 var ga = new Tracker('UA-3635138-29');
+ga.init();
 ga.pageview();
 
 jQuery('#logo').mousedown(() => ga.event('Cabeçalho', 'Clique', 'Logo'));
@@ -92,10 +94,8 @@ jQuery('.clear-report').on('click', () =>
 );
 
 jQuery('#busca').on('change', function() {
-  if (this.value) {
-    ga.event('Cabeçalho', 'Busca', 'Busca');
-    ga.pageview('/busca/?busca=' + this.value);
-  }
+  if (!this.value) return;
+  ga.event('Cabeçalho', 'Busca', 'Busca');
 });
 
 RW.panel.on('click', '.track', function() {
