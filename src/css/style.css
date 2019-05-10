@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
 	font-family: Ubuntu, Helvetica, Arial, Verdana, sans-serif;
 	font-size: 13px;
 	background-color: #eee;
@@ -13,10 +14,11 @@ header {
 	white-space: nowrap;
 	z-index: 10;
 }
-	header > * {
-		vertical-align: middle;
-		display: inline-block;
-	}
+
+header>* {
+	vertical-align: middle;
+	display: inline-block;
+}
 
 #stripes {
 	position: absolute;
@@ -24,64 +26,85 @@ header {
 	bottom: 0;
 	width: 100%;
 	height: 2px;
-	background-image: linear-gradient(to right, #fcc441 0%,#1a71a9 19%,#1a71a9 43%,#1e9449 59%,#1e9449 100%);
+	background-image: linear-gradient(to right, #fcc441 0%, #1a71a9 19%, #1a71a9 43%, #1e9449 59%, #1e9449 100%);
 }
 
-#logo{
+#logo {
 	height: 42px;
 }
-	#logo img {
-		margin: 2px 10px;
-	}
 
-.filter li{
+#logo img {
+	margin: 2px 10px;
+}
+
+.filter li {
 	display: inline-block;
 	vertical-align: middle;
 	border-radius: 50%;
 	margin: 0 1.5px;
 }
+
 .filter li:hover {
-	background-color:#eee;
+	background-color: #eee;
 }
+
 .filter li.checked {
-	background-color:#ddd;
+	background-color: #ddd;
 }
-	.filter a {
-		float: left;
-		width: 25px;
-		height: 25px;
-		background-size: 22px 22px;
-		background-position: center center;
-		background-repeat: no-repeat;
-		color:#323232;
-		text-decoration: none;
-	}
-	.filter .pageview, .track.pageview {
-		background-image: url('../img/ico-pageview.png');
-	}
-	.filter .event, .track.event {
-		background-image: url('../img/ico-event.png');
-	}
-	.filter .social, .track.social {
-		background-image: url('../img/ico-social.png');
-	}
-	.filter .transaction, .track.transaction {
-		background-image: url('../img/ico-transaction.png');
-	}
-	.filter .item, .track.item {
-		background-image: url('../img/ico-item.png');
-	}
-	.filter .timing, .track.timing {
-		background-image: url('../img/ico-timing.png');
-	}
-	.filter .appview, .track.appview {
-		background-image: url('../img/ico-appview.png');
-	}
-	.filter .exception, .track.exception {
-		background-image: url('../img/ico-exception.png');
-	}
-	
-.clear, #busca {
+
+.filter a {
+	float: left;
+	width: 25px;
+	height: 25px;
+	background-size: 22px 22px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	color: #323232;
+	text-decoration: none;
+}
+
+.filter .pageview,
+.track.pageview {
+	background-image: url('../img/ico-pageview.png');
+}
+
+.filter .event,
+.track.event {
+	background-image: url('../img/ico-event.png');
+}
+
+.filter .social,
+.track.social {
+	background-image: url('../img/ico-social.png');
+}
+
+.filter .transaction,
+.track.transaction {
+	background-image: url('../img/ico-transaction.png');
+}
+
+.filter .item,
+.track.item {
+	background-image: url('../img/ico-item.png');
+}
+
+.filter .timing,
+.track.timing {
+	background-image: url('../img/ico-timing.png');
+}
+
+.filter .appview,
+.track.appview {
+	background-image: url('../img/ico-appview.png');
+}
+
+.filter .exception,
+.track.exception {
+	background-image: url('../img/ico-exception.png');
+}
+
+.clear,
+#busca {
 	border: 1px solid #ccc;
 	border-radius: 3px;
 }
@@ -107,21 +130,23 @@ header {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
-	.clear:hover {
-		background-color: #dddddd;
-		border-color: #aaa;
-	}
-	.clear:active {
-		border-color: #aaa;
-		border-bottom-color: #888;
-		box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
-	}
+
+.clear:hover {
+	background-color: #dddddd;
+	border-color: #aaa;
+}
+
+.clear:active {
+	border-color: #aaa;
+	border-bottom-color: #888;
+	box-shadow: inset 0 0 5px 2px #aaaaaa, 0 1px 0 0 #eeeeee;
+}
 
 #busca {
 	height: 20px;
 }
 
-.track{
+.track {
 	margin: 5px 1%;
 	background-color: #f5f5f5;
 	border: 1px solid #dfdfdf;
@@ -134,51 +159,60 @@ header {
 	background-size: 18px;
 	position: relative;
 }
-	.label{
-		margin: 0 3% -3px;
-		height: 3px;
-		border-radius: 0 10px;
-		background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 10%, transparent 80%, rgba(0, 0, 0, 0.3));
-		background-color: #1b9ed5;
-	}
-	.label.ok{
-		background-color: #87c23f;
-	}
-	.label.warn{
-		background-color: #fbab3d;
-	}
-	.label.error, .track.exception .label{
-		background-color: #ff5a5a;
-	}
-	.type{
-		float: left;
-		margin-right: 10px;
-		width: 22px;
-		margin-top: 2px;
-	}
-	.content{
-		padding: 4px 26px 3px 24px;
-		white-space: nowrap;
-		overflow: hidden;
-		line-height: 18px;
-		height: 18px;
-	}
-	.track:hover .delete {
-	   display: block;
-	}
-	.delete {
-		display: none;
-		position: absolute;
-		right: 0;
-		top: 4px;
-		width: 24px;
-		height: 18px;
-		background-color: #f5f5f5;
-		background-size: 16px;
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-image: url('../img/ico-del.png');
-	}
+
+.label {
+	margin: 0 3% -3px;
+	height: 3px;
+	border-radius: 0 10px;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 10%, transparent 80%, rgba(0, 0, 0, 0.3));
+	background-color: #1b9ed5;
+}
+
+.label.ok {
+	background-color: #87c23f;
+}
+
+.label.warn {
+	background-color: #fbab3d;
+}
+
+.label.error,
+.track.exception .label {
+	background-color: #ff5a5a;
+}
+
+.type {
+	float: left;
+	margin-right: 10px;
+	width: 22px;
+	margin-top: 2px;
+}
+
+.content {
+	padding: 4px 26px 3px 24px;
+	white-space: nowrap;
+	overflow: hidden;
+	line-height: 18px;
+	height: 18px;
+}
+
+.track:hover .delete {
+	display: block;
+}
+
+.delete {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 4px;
+	width: 24px;
+	height: 18px;
+	background-color: #f5f5f5;
+	background-size: 16px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-image: url('../img/ico-del.png');
+}
 
 .qsWrapper {
 	cursor: auto;
@@ -186,26 +220,32 @@ header {
 	overflow: auto;
 	max-width: 100%;
 }
-	.queryString {
-		border-collapse: collapse;
-		width:100%;
-	}
-		.queryString tr:nth-child(2n+1) {
-			background-color: #e0e0e0;
-		}
-			.queryString td{
-				padding:0.2em 0.5em;
-			}
-			.queryString td:first-child{
-				font-weight: bold;
-				white-space: nowrap;
-				width: 68px;
-			}
+
+.queryString {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.queryString tr:nth-child(2n+1) {
+	background-color: #e0e0e0;
+}
+
+.queryString td {
+	padding: 0.2em 0.5em;
+}
+
+.queryString td:first-child {
+	font-weight: bold;
+	white-space: nowrap;
+	width: 68px;
+}
+
 /* classes para filtro */
 .filtrado .track {
 	display: none;
 }
-#panel{
+
+#panel {
 	padding-top: 47px;
 }
 
@@ -216,10 +256,10 @@ header {
 .item .track.item:not(.hidden),
 .timing .track.timing:not(.hidden),
 .appview .track.appview:not(.hidden),
-.exception .track.exception:not(.hidden){
+.exception .track.exception:not(.hidden) {
 	display: block !important;
 }
 
 .track.hidden {
-	display: none!important;
+	display: none !important;
 }
