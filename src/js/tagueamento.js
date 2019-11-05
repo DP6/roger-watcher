@@ -3,18 +3,17 @@ class Tracker {
     this.id = id;
     this.cid = null;
     this.queue = [];
-    this.page = '/panel';
-    this.hostname = 'roger.dp6.com.br';
-    this.title = 'Roger Watcher';
+    this.wasSynced = false;
   }
 
   async init() {
     const { dp6_cid } = await new Promise(resolve =>
-      chrome.storage.sync.get('dp6_cid', items => resolve(items))
+      chrome.storage.sync.get('dp6_cid', items => resolve(items || {}))
     );
 
     if (dp6_cid) {
       this.cid = dp6_cid;
+      this.wasSynced = true;
     } else {
       this.cid = this.generateCid();
       await new Promise(resolve =>
@@ -25,8 +24,8 @@ class Tracker {
   }
   generateCid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = (Math.random() * 16) | 0;
-      var v = c === 'x' ? r : (r & 0x3) | 0x8;
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   }
@@ -36,22 +35,27 @@ class Tracker {
     const payload = RW.util.objectToQuery({
       v: 1,
       tid: this.id,
+      an: 'Roger Watcher',
+      aid: 'com.dp6.rogerwatcher',
+      av: RW.info.version,
+      cd: 'Panel',
       cid: this.cid,
-      sr: `${screen.width}x${screen.height}`,
-      vp: `${window.innerWidth}x${window.innerHeight}`,
+      de: document.characterSet,
+      ds: 'app',
       sd: `${screen.colorDepth}-bits`,
-      dh: this.hostname,
-      dp: this.page,
-      dt: this.title,
-      cd1: RW.info.version,
+      sr: `${screen.width}x${screen.height}`,
+      ua: navigator.userAgent,
+      ul: navigator.language,
+      vp: `${window.innerWidth}x${window.innerHeight}`,
+      cd3: this.wasSynced ? 'sincronizado' : 'novo',
       ...params,
       z: new Date() | 0
     });
     navigator.sendBeacon('https://www.google-analytics.com/collect', payload);
   }
-  pageview(page) {
-    const extra = page ? {} : { dp: page };
-    this.sendHit({ t: 'pageview', ...extra });
+  screenview(cd) {
+    const extra = cd ? {} : { cd };
+    this.sendHit({ t: 'screenview', ...extra });
   }
   event(ec = '', ea = '', el = '', ev = 0) {
     this.sendHit({
@@ -73,15 +77,15 @@ class Tracker {
   }
 }
 
-var ga = new Tracker('UA-3635138-29');
+const ga = new Tracker('UA-3635138-29');
 ga.init();
-ga.pageview();
+ga.screenview();
 
 jQuery('#logo').mousedown(() => ga.event('Cabeçalho', 'Clique', 'Logo'));
 
 jQuery('.filter').on('click', 'a', function() {
   const isChecked = this.closest('li').classList.contains('checked');
-  var action = (isChecked ? 'Adicionar' : 'Remover') + ' filtro';
+  const action = (isChecked ? 'Adicionar' : 'Remover') + ' filtro';
   ga.event('Cabeçalho', action, this.className);
 });
 
@@ -103,11 +107,11 @@ RW.panel.on('click', '.track', function() {
 });
 
 RW.panel.on('click', '.delete', function() {
-  var track = this.closest('.track');
+  const track = this.closest('.track');
   ga.event('Disparos', 'Exclusão', track.classList[1]);
 });
 
 window.onbeforeunload = function() {
-  var time = (performance.now() / 1000) | 0;
+  const time = (performance.now() / 1000) | 0;
   ga.timing('Utilização', 'Tempo de Uso', time, time + 's');
 };

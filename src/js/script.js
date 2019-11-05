@@ -1,10 +1,8 @@
 /* global jQuery: false, window: false, document: false, chrome: false */
-var RW = (window.RW = (function() {
+const RW = (function() {
   const info = chrome.runtime.getManifest();
   const notifier = jQuery({});
-  const body = jQuery(document.body);
   const panel = jQuery('#panel');
-  const filter = jQuery('#filter');
   const busca = jQuery('#busca');
   const requiredParameters = {
     all: ['v', 't', 'cid', 'tid'],
@@ -16,17 +14,11 @@ var RW = (window.RW = (function() {
     universal_analytics: {
       template: jQuery(jQuery('#template-universal').html()),
       parseByType(type, params) {
-        if (type instanceof Array) {
-          return Array.from(arguments).map(arr =>
-            modules.universal_analytics.parseByType.apply(null, arr)
-          );
-        } else if (requiredParameters[type]) {
-          return requiredParameters[type].filter(
-            param => params[param] === undefined
-          );
-        }
+        if (!requiredParameters[type]) return [];
 
-        return [];
+        return requiredParameters[type].filter(
+          param => params[param] === undefined
+        );
       },
       appendNewHit(obj) {
         const clone = this.template.clone();
@@ -80,14 +72,9 @@ var RW = (window.RW = (function() {
             break;
         }
 
-        const errors = this.parseByType(
-          ['all', params],
-          [params.t, params]
-        ).filter(error => error.length > 0);
-
-        if (commonRules.universal_analytics_url(url) === false) {
-          errors.push(url);
-        }
+        const errors = [['all', params], [params.t, params]]
+          .map(this.parseByType)
+          .filter(error => error.length > 0);
 
         this.appendNewHit({
           parameters: params,
@@ -119,9 +106,7 @@ var RW = (window.RW = (function() {
   }
 
   function queryToObject(url = '') {
-    if (url.startsWith('?')) {
-      url = url.slice(1);
-    }
+    if (url.startsWith('?')) url = url.slice(1);
 
     return url.split('&').reduce((acc, next) => {
       const [key, ...val] = next.split('=');
@@ -132,7 +117,7 @@ var RW = (window.RW = (function() {
 
   function objectToQuery(obj) {
     return Object.keys(obj)
-      .reduce((acc, next) => acc.concat(`${next}=${obj[next]}`), [])
+      .reduce((acc, key) => acc.concat(`${key}=${escape(obj[key])}`), [])
       .join('&');
   }
 
@@ -157,30 +142,31 @@ var RW = (window.RW = (function() {
     }
   }
 
+  function encode(str) {
+    try {
+      return encodeURIComponent(str);
+    } catch ($$e) {
+      return escape(str);
+    }
+  }
   function init({ url, method, requestBody, initiator }) {
     if (initiator.includes('chrome-extension://')) return;
-    if (commonRules.universal_analytics(url)) {
-      if (method === 'GET') {
-        modules.universal_analytics.handler(url);
-      } else {
-        requestBody.raw
-          .map(function(data) {
-            return decodeURIComponent(
-              String.fromCharCode.apply(null, new Uint8Array(data.bytes))
-            );
-          })
-          .forEach(row => modules.universal_analytics.handler(url, row));
-      }
+    if (!commonRules.universal_analytics(url)) return;
+    if (method === 'GET') {
+      modules.universal_analytics.handler(url);
+    } else {
+      requestBody.raw
+        .map(function(data) {
+          return String.fromCharCode(...new Uint8Array(data.bytes));
+        })
+        .forEach(row => modules.universal_analytics.handler(url, row));
     }
   }
 
   return {
     init,
-    body,
-    filter,
     busca,
     panel,
-    modules,
     clear,
     info,
     autoscroll: true,
@@ -191,7 +177,7 @@ var RW = (window.RW = (function() {
       sub: subscribe
     }
   };
-})());
+})();
 
 chrome.webRequest.onBeforeRequest.addListener(
   RW.init,

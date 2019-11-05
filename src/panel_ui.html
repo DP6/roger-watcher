@@ -391,6 +391,23 @@
 		</div>
 	</script>
 	<script src="js/jquery.js"></script>
+	<script>
+		const RW = {
+			panel: jQuery('#panel'),
+			busca: jQuery('#busca'),
+			info: {
+				name: 'Dev',
+				version: 'X.X.X'
+			},
+			util: {
+				sub: () => {}
+			},
+			clear() {
+				jQuery('.track').remove();
+				this.busca.val('');
+			}
+		};
+	</script>
 	<script src="js/eventos.js"></script>
 	<script src="js/tagueamento.js"></script>
 </body>
