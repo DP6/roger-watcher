@@ -33,7 +33,13 @@ const RW = (function() {
         panel.append(clone);
         if (RW.autoscroll) clone.get(0).scrollIntoView({ behavior: 'smooth' });
       },
-      handler(url = '', qs = url.slice(url.indexOf('?') + 1)) {
+      handler(url = '', qs = '') {
+        if (qs === '') {
+          if (url.includes('?')) {
+            qs = url.slice(url.indexOf('?') + 1);
+          } else return;
+        }
+
         const params = queryToObject(qs);
         let content = '';
 
@@ -65,14 +71,16 @@ const RW = (function() {
             // color = "#33CCCC";
             break;
           case 'timing':
-            content = [params.utc, params.utv, params.utl, params.utt].join(
-              ' > '
-            );
+            const utp = [params.utc, params.utv, params.utl, params.utt];
+            content = utp.some(Boolean) ? utp.join(' > ') : 'DOM Page Timing';
             // color = "#A66F00";
             break;
         }
 
-        const errors = [['all', params], [params.t, params]]
+        const errors = [
+          ['all', params],
+          [params.t, params]
+        ]
           .map(this.parseByType)
           .filter(error => error.length > 0);
 
@@ -149,7 +157,7 @@ const RW = (function() {
       return escape(str);
     }
   }
-  function init({ url, method, requestBody, initiator }) {
+  function init({ url, method, requestBody, initiator = '' }) {
     if (initiator.includes('chrome-extension://')) return;
     if (!commonRules.universal_analytics(url)) return;
     if (method === 'GET') {

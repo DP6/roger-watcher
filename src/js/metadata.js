@@ -217,6 +217,14 @@ window.metadata = {
       name: 'server response time',
       rule: commonRules.integer
     },
+    dit: {
+      name: 'dom interactive time',
+      rule: commonRules.integer
+    },
+    clt: {
+      name: 'content loading time',
+      rule: commonRules.integer
+    },
 
     // "Custom Dimensions"
     cd0: {
