@@ -1,5 +1,5 @@
 /* global jQuery: false, window: false, document: false, chrome: false */
-const RW = (function() {
+const RW = (function () {
   const info = chrome.runtime.getManifest();
   const notifier = jQuery({});
   const panel = jQuery('#panel');
@@ -8,7 +8,7 @@ const RW = (function() {
     all: ['v', 't', 'cid', 'tid'],
     social: ['sn', 'sa', 'st'],
     transaction: ['ti'],
-    item: ['ti', 'in']
+    item: ['ti', 'in'],
   };
   const modules = {
     universal_analytics: {
@@ -17,7 +17,7 @@ const RW = (function() {
         if (!requiredParameters[type]) return [];
 
         return requiredParameters[type].filter(
-          param => params[param] === undefined
+          (param) => params[param] === undefined
         );
       },
       appendNewHit(obj) {
@@ -25,10 +25,7 @@ const RW = (function() {
         const content = decode(obj.content);
         clone.addClass(obj.parameters.t).data('qs', obj.queryString);
         clone.find('.label').addClass(obj.status);
-        clone
-          .find('.content')
-          .attr('title', content)
-          .text(content);
+        clone.find('.content').attr('title', content).text(content);
         clone.find('table.queryString').html(objectToRows(obj.parameters));
         panel.append(clone);
         if (RW.autoscroll) clone.get(0).scrollIntoView({ behavior: 'smooth' });
@@ -54,7 +51,7 @@ const RW = (function() {
             break;
           case 'event':
             content = [params.ec, params.ea, params.el]
-              .map(val => val || '<empty>')
+              .map((val) => val || '<empty>')
               .join(' > ');
             // color = "#33CC33";
             break;
@@ -79,16 +76,16 @@ const RW = (function() {
 
         const errors = [
           ['all', params],
-          [params.t, params]
+          [params.t, params],
         ]
           .map(this.parseByType)
-          .filter(error => error.length > 0);
+          .filter((error) => error.length > 0);
 
         this.appendNewHit({
           parameters: params,
           queryString: qs,
           status: errors.length ? 'error' : 'ok',
-          content
+          content,
         });
 
         publish('newhit', url);
@@ -96,8 +93,8 @@ const RW = (function() {
         if (panel.hasClass('filtrado') && !panel.hasClass(params.t)) {
           panel.find();
         }
-      }
-    }
+      },
+    },
   };
 
   function clear() {
@@ -132,8 +129,8 @@ const RW = (function() {
   function objectToRows(obj) {
     const metadata = window.metadata.universal_analytics;
     const html = Object.keys(obj)
-      .filter(key => !key.startsWith('_'))
-      .map(key => {
+      .filter((key) => !key.startsWith('_'))
+      .map((key) => {
         const keyName = decode(metadata[key] ? metadata[key].name : key);
         const value = decode(obj[key]);
         return `<td class="key" title="${key}">${keyName}</td>
@@ -164,10 +161,10 @@ const RW = (function() {
       modules.universal_analytics.handler(url);
     } else {
       requestBody.raw
-        .map(function(data) {
+        .map(function (data) {
           return String.fromCharCode(...new Uint8Array(data.bytes));
         })
-        .forEach(row => modules.universal_analytics.handler(url, row));
+        .forEach((row) => modules.universal_analytics.handler(url, row));
     }
   }
 
@@ -182,8 +179,8 @@ const RW = (function() {
       queryToObject,
       objectToQuery,
       pub: publish,
-      sub: subscribe
-    }
+      sub: subscribe,
+    },
   };
 })();
 
@@ -192,8 +189,8 @@ chrome.webRequest.onBeforeRequest.addListener(
   {
     urls: [
       '*://*.google-analytics.com/collect*',
-      '*://*.google-analytics.com/*/collect*'
-    ]
+      '*://*.google-analytics.com/*/collect*',
+    ],
   },
   ['requestBody']
 );
