@@ -1,11 +1,15 @@
 window.commonRules = {
   regex: {
     universal_analytics_url: /^https?:\/\/(www|ssl)\.google-analytics.com\/([a-z]\/)?collect\??/i,
+    analytics4_url: /^https?:\/\/analytics.google.com\/([a-z]\/)?collect\??/i,
     trackingID: /^UA\-\d+\-\d{1,2}$/,
     hitType: /^(pageview|appview|event|transaction|item|social|exception|timing)$/
   },
   universal_analytics(url) {
     return this.regex.universal_analytics_url.test(url);
+  },
+  analytics4(url) {
+    return this.regex.analytics4_url.test(url);
   },
   integer: value => value === String(parseInt(value, 10)),
   string: (value, length) =>

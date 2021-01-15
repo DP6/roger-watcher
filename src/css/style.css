@@ -73,6 +73,11 @@ header>* {
 	background-image: url('../img/ico-event.png');
 }
 
+.filter .analytics4,
+.track.analytics4 {
+	background-image: url('../img/ico-four.png');
+}
+
 .filter .social,
 .track.social {
 	background-image: url('../img/ico-social.png');
@@ -251,6 +256,7 @@ header>* {
 
 .pageview .track.pageview:not(.hidden),
 .event .track.event:not(.hidden),
+.analytics4 .track.analytics4:not(.hidden),
 .social .track.social:not(.hidden),
 .transaction .track.transaction:not(.hidden),
 .item .track.item:not(.hidden),
