@@ -208,9 +208,9 @@ const RW = (function () {
     if (!commonRules.universal_analytics(url) && !commonRules.analytics4(url))
       return;
 
-    if (method === 'GET') {
+    if (url.includes('v=1')) {
       modules.universal_analytics.handler(url);
-    } else if (method === 'POST') {
+    } else if (url.includes('v=2')) {
       modules.analytics4.handler(url);
     } else {
       requestBody.raw
