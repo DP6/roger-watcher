@@ -217,6 +217,8 @@ const RW = (function () {
         .map(function (data) {
           return String.fromCharCode(...new Uint8Array(data.bytes));
         })
+        .map(row => row.split('\n'))
+        .flat()
         .forEach((row) => modules.universal_analytics.handler(url, row));
     }
   }
@@ -245,6 +247,10 @@ chrome.webRequest.onBeforeRequest.addListener(
       '*://*.google-analytics.com/*/collect*',
       '*://*.analytics.google.com/*/collect*',
       '*://*.analytics.google.com/collect*',
+      '*://*.google-analytics.com/batch*',
+      '*://*.google-analytics.com/*/batch*',
+      '*://*.analytics.google.com/*/batch*',
+      '*://*.analytics.google.com/batch*',
     ],
   },
   ['requestBody']
