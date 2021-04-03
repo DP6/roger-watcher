@@ -1,7 +1,7 @@
 window.commonRules = {
   regex: {
-    universal_analytics_url: /^https?:\/\/(www|ssl)\.google-analytics.com\/([a-z]\/)?collect\??/i,
-    analytics4_url: /^https?:\/\/analytics.google.com\/([a-z]\/)?collect\??/i,
+    universal_analytics_url: /^https?:\/\/(www|ssl)\.google-analytics.com\/([a-z]\/)?(collect|batch)\??/i,
+    analytics4_url: /^https?:\/\/analytics.google.com\/([a-z]\/)?(collect|batch)\??/i,
     trackingID: /^UA\-\d+\-\d{1,2}$/,
     hitType: /^(pageview|appview|event|transaction|item|social|exception|timing)$/
   },
