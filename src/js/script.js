@@ -219,7 +219,13 @@ const RW = (function () {
         })
         .map(row => row.split('\n'))
         .flat()
-        .forEach((row) => modules.universal_analytics.handler(url, row));
+        .forEach((row) => {
+          if (row.includes('v=2')) {
+            modules.analytics4.handler(url, row);
+          } else {
+            modules.universal_analytics.handler(url, row);
+          }
+        });
     }
   }
 
