@@ -190,12 +190,13 @@ const RW = (function () {
   function objectToRows(obj) {
     const html = Object.keys(obj)
       .filter((key) => !key.startsWith('_'))
-      .map((key) => {
-        const keyName = getKeyName(key);
-        const value = decode(obj[key]);
-        return `<td class="key" title="${key}">${keyName}</td>
-					<td class="value" title="${value}">${value}</td>`;
-      });
+      .map((key) => ({
+        key: key,
+        keyName: getKeyName(key),
+        value: decode(obj[key])
+      }))
+      .map(entry => `<td class="key" title="${entry.key}">${entry.keyName}</td>
+					<td class="value" title="${entry.value}">${entry.value}</td>`);
     return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
   }
 
