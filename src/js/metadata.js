@@ -35,53 +35,8 @@ window.metadata = {
       length: 2048,
       rule: commonRules.string
     },
-    cg0: {
-      name: 'content group 0',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg1: {
-      name: 'content group 1',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg2: {
-      name: 'content group 2',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg3: {
-      name: 'content group 3',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg4: {
-      name: 'content group 4',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg5: {
-      name: 'content group 5',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg6: {
-      name: 'content group 6',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg7: {
-      name: 'content group 7',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg8: {
-      name: 'content group 8',
-      length: 100,
-      rule: commonRules.string
-    },
-    cg9: {
-      name: 'content group 9',
+    'cg#': {
+      name: 'content group #',
       length: 100,
       rule: commonRules.string
     },
@@ -227,96 +182,15 @@ window.metadata = {
     },
 
     // "Custom Dimensions"
-    cd0: {
-      name: 'dimension 0',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd1: {
-      name: 'dimension 1',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd2: {
-      name: 'dimension 2',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd3: {
-      name: 'dimension 3',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd4: {
-      name: 'dimension 4',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd5: {
-      name: 'dimension 5',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd6: {
-      name: 'dimension 6',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd7: {
-      name: 'dimension 7',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd8: {
-      name: 'dimension 8',
-      length: 150,
-      rule: commonRules.string
-    },
-    cd9: {
-      name: 'dimension 9',
+    'cd#': {
+      name: 'dimension #',
       length: 150,
       rule: commonRules.string
     },
 
     // "Custom Metric"
-    cm0: {
-      name: 'metric 0',
-      rule: commonRules.integer
-    },
-    cm1: {
-      name: 'metric 1',
-      rule: commonRules.integer
-    },
-    cm2: {
-      name: 'metric 2',
-      rule: commonRules.integer
-    },
-    cm3: {
-      name: 'metric 3',
-      rule: commonRules.integer
-    },
-    cm4: {
-      name: 'metric 4',
-      rule: commonRules.integer
-    },
-    cm5: {
-      name: 'metric 5',
-      rule: commonRules.integer
-    },
-    cm6: {
-      name: 'metric 6',
-      rule: commonRules.integer
-    },
-    cm7: {
-      name: 'metric 7',
-      rule: commonRules.integer
-    },
-    cm8: {
-      name: 'metric 8',
-      rule: commonRules.integer
-    },
-    cm9: {
-      name: 'metric 9',
+    'cm#': {
+      name: 'metric #',
       rule: commonRules.integer
     },
 

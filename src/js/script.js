@@ -175,12 +175,22 @@ const RW = (function () {
       .join('&');
   }
 
-  function objectToRows(obj) {
+  function getKeyName(key) {
     const metadata = window.metadata.universal_analytics;
+    const [number] = /\d+/.exec(key) ?? [];
+    if (number) {
+      const wildcardKey = key.replace(number, '#');
+      return decode(metadata[wildcardKey]?.name.replace('#', number) ?? key);
+    } else {
+      return decode(metadata[key]?.name ?? key);
+    }
+  }
+
+  function objectToRows(obj) {
     const html = Object.keys(obj)
       .filter((key) => !key.startsWith('_'))
       .map((key) => {
-        const keyName = decode(metadata[key] ? metadata[key].name : key);
+        const keyName = getKeyName(key);
         const value = decode(obj[key]);
         return `<td class="key" title="${key}">${keyName}</td>
 					<td class="value" title="${value}">${value}</td>`;
