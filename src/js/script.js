@@ -177,12 +177,13 @@ const RW = (function () {
 
   function getKeyName(key) {
     const metadata = window.metadata.universal_analytics;
-    const [number] = /\d+/.exec(key) ?? [];
+    const number = (/\d+/.exec(key) || [])[0];
     if (number) {
       const wildcardKey = key.replace(number, '#');
-      return decode(metadata[wildcardKey]?.name.replace('#', number) ?? key);
+      const metadataMatch = metadata[wildcardKey];
+      return decode(metadataMatch ? metadataMatch.name.replace('#', number) : key);
     } else {
-      return decode(metadata[key]?.name ?? key);
+      return decode(metadata[key] ? metadata[key].name : key);
     }
   }
 
