@@ -187,6 +187,10 @@ const RW = (function () {
     }
   }
 
+  function padNumericPart(key) {
+    return key.replace(/\d+/, match => match.padStart(4, '0'));
+  }
+
   function objectToRows(obj) {
     const html = Object.keys(obj)
       .filter((key) => !key.startsWith('_'))
@@ -195,6 +199,11 @@ const RW = (function () {
         keyName: getKeyName(key),
         value: decode(obj[key])
       }))
+      .sort((entryA, entryB) => {
+        const keyNameA = padNumericPart(entryA.keyName);
+        const keyNameB = padNumericPart(entryB.keyName);
+        return keyNameA.localeCompare(keyNameB);
+      })
       .map(entry => `<td class="key" title="${entry.key}">${entry.keyName}</td>
 					<td class="value" title="${entry.value}">${entry.value}</td>`);
     return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
