@@ -32,7 +32,7 @@ module.exports = grunt => {
       },
       dist: {
         files: {
-          'dist/js/all.js': ['src/js/rules.js', 'src/js/metadata.js', 'src/js/script.js', 'src/js/eventos.js', 'src/js/tagueamento.js'],
+          'dist/js/all.js': ['src/js/commonrules.js', 'src/js/metadata.js', 'src/js/script.js', 'src/js/eventos.js', 'src/js/tagueamento.js'],
           'dist/js/devtools.js': 'src/js/devtools.js'
         }
       }
