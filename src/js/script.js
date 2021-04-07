@@ -175,16 +175,28 @@ const RW = (function () {
       .join('&');
   }
 
-  function objectToRows(obj) {
+  function getKeyName(key) {
     const metadata = window.metadata.universal_analytics;
+    const number = (/\d+/.exec(key) || [])[0];
+    if (number) {
+      const wildcardKey = key.replace(number, '#');
+      const metadataMatch = metadata[wildcardKey];
+      return decode(metadataMatch ? metadataMatch.name.replace('#', number) : key);
+    } else {
+      return decode(metadata[key] ? metadata[key].name : key);
+    }
+  }
+
+  function objectToRows(obj) {
     const html = Object.keys(obj)
       .filter((key) => !key.startsWith('_'))
-      .map((key) => {
-        const keyName = decode(metadata[key] ? metadata[key].name : key);
-        const value = decode(obj[key]);
-        return `<td class="key" title="${key}">${keyName}</td>
-					<td class="value" title="${value}">${value}</td>`;
-      });
+      .map((key) => ({
+        key: key,
+        keyName: getKeyName(key),
+        value: decode(obj[key])
+      }))
+      .map(entry => `<td class="key" title="${entry.key}">${entry.keyName}</td>
+					<td class="value" title="${entry.value}">${entry.value}</td>`);
     return html.length ? '<tr>' + html.join('</tr><tr>') + '</tr>' : '';
   }
 
