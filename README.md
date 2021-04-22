@@ -2,7 +2,7 @@
 A powerful extension to validate the implementation of Universal Analytics.
 
 ## Link da Loja do Chrome
-https://chrome.google.com/webstore/detail/roger-watcher/impckkpjcejdmacpmkpegegnpagddajk
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Roger%20Watcher-orange)](https://chrome.google.com/webstore/detail/roger-watcher/impckkpjcejdmacpmkpegegnpagddajk)
 
 ## Overview
 Roger Watcher is a Google Chrome extension to help with debugging Universal Analytics. It will log every hit sent to Google's servers, so that you can easily check which parameters are being sent, along with their values, in a user-friendly format. In addition, it provides an easy view of which hits were set incorrectly, with missing or wrong parameters.
